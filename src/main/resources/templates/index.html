@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>ToDo一覧</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 8px; }
+    th { background: #2884fc; color: #ffffff; }
+    .actions form { display: inline; }
+    .message { margin: 12px 0; color: #666; }
+    .completed-row { background: #B0B6BF; }
+  </style>
+</head>
+<body>
+  <h1>ToDo一覧</h1>
+
+  <form method="get" th:action="@{/todos}">
+    <label>検索:
+      <input type="text" name="q" th:value="${q}">
+    </label>
+    <label>並び替え:
+      <select name="sort" th:value="${sort}">
+        <option value="createdAt" th:selected="${sort == 'createdAt'}">作成日</option>
+        <option value="updatedAt" th:selected="${sort == 'updatedAt'}">更新日</option>
+        <option value="title" th:selected="${sort == 'title'}">タイトル</option>
+        <option value="author" th:selected="${sort == 'author'}">作成者</option>
+        <option value="completed" th:selected="${sort == 'completed'}">状態</option>
+      </select>
+    </label>
+    <label>順序:
+      <select name="dir" th:value="${dir}">
+        <option value="asc" th:selected="${dir == 'asc'}">昇順</option>
+        <option value="desc" th:selected="${dir == 'desc'}">降順</option>
+      </select>
+    </label>
+    <button type="submit">検索/並び替え</button>
+    <a th:href="@{/todos}">クリア</a>
+  </form>
+
+  <p>
+    <a th:href="@{/todos/new}">新規登録</a>
+  </p>
+
+  <div th:if="${#lists.isEmpty(todos)}" class="message">データはありません</div>
+
+  <table th:if="${!#lists.isEmpty(todos)}">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>タイトル</th>
+        <th>作成者</th>
+        <th>状態</th>
+        <th>作成日</th>
+        <th>更新日</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="todo, stat : ${todos}" th:classappend="${todo.completed} ? 'completed-row' : ''">
+        <td th:text="${stat.count}">1</td>
+        <td th:text="${todo.title}">タイトル</td>
+        <td th:text="${todo.author}">作成者</td>
+        <td th:text="${todo.completed ? '完了' : '未完了'}">未完了</td>
+        <td th:text="${#temporals.format(todo.createdAt, 'yyyy-MM-dd HH:mm')}">2025-01-01 00:00</td>
+        <td th:text="${#temporals.format(todo.updatedAt, 'yyyy-MM-dd HH:mm')}">2025-01-01 00:00</td>
+        <td class="actions">
+          <form method="post" th:action="@{/todos/{id}/toggle(id=${todo.id})}">
+            <button type="submit" th:text="${todo.completed ? '未完了にする' : '完了にする'}">完了にする</button>
+          </form>
+          <a th:href="@{/todos/{id}/edit(id=${todo.id})}">編集</a>
+          <form method="post" th:action="@{/todos/{id}/delete(id=${todo.id})}" onsubmit="return confirm('削除しますか？');">
+            <button type="submit">削除</button>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
