@@ -75,13 +75,7 @@
         <td th:text="${#temporals.format(todo.createdAt, 'yyyy-MM-dd HH:mm')}">2025-01-01 00:00</td>
         <td th:text="${#temporals.format(todo.updatedAt, 'yyyy-MM-dd HH:mm')}">2025-01-01 00:00</td>
         <td class="actions">
-          <form method="post" th:action="@{/todos/{id}/toggle(id=${todo.id})}">
-            <button type="submit" th:text="${todo.completed ? '未完了にする' : '完了にする'}">完了にする</button>
-          </form>
           <a th:href="@{/todos/{id}/edit(id=${todo.id})}">編集</a>
-          <form method="post" th:action="@{/todos/{id}/delete(id=${todo.id})}" onsubmit="return confirm('削除しますか？');">
-            <button type="submit">削除</button>
-          </form>
         </td>
       </tr>
     </tbody>
