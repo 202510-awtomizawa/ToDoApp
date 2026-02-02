@@ -34,6 +34,7 @@ public class TodoController {
       @RequestParam(name = "q", required = false) String keyword,
       @RequestParam(name = "sort", defaultValue = "createdAt") String sortField,
       @RequestParam(name = "dir", defaultValue = "desc") String direction,
+      @RequestParam(name = "bulk", defaultValue = "false") boolean bulk,
       Model model) {
     Sort sort = Sort.by("completed").ascending()
         .and(Sort.by(Sort.Direction.fromString(direction), sortField));
@@ -42,6 +43,7 @@ public class TodoController {
     model.addAttribute("q", keyword == null ? "" : keyword);
     model.addAttribute("sort", sortField);
     model.addAttribute("dir", direction);
+    model.addAttribute("bulk", bulk);
     return "index";
   }
 
@@ -107,6 +109,25 @@ public class TodoController {
   @GetMapping("/{id}/toggle")
   public String toggleGet(@PathVariable("id") Long id) {
     todoService.toggleCompleted(id);
+    return "redirect:/todos";
+  }
+
+  @PostMapping("/bulk/confirm")
+  public String bulkConfirm(@RequestParam(name = "ids", required = false) List<Long> ids, Model model) {
+    if (ids == null || ids.isEmpty()) {
+      return "redirect:/todos?bulk=true";
+    }
+    List<Todo> todos = todoService.findAllByIds(ids);
+    model.addAttribute("todos", todos);
+    model.addAttribute("ids", ids);
+    return "bulk_confirm";
+  }
+
+  @PostMapping("/bulk/delete")
+  public String bulkDelete(@RequestParam(name = "ids", required = false) List<Long> ids) {
+    if (ids != null && !ids.isEmpty()) {
+      todoService.deleteAllByIds(ids);
+    }
     return "redirect:/todos";
   }
 }

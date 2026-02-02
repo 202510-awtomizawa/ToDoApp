@@ -13,6 +13,31 @@
     .message { margin: 12px 0; color: #666; }
     .completed-row { background: #E2E8F0; color: #64748B; }
     .incomplete-row { background: #FFFFFF; }
+    .bulk-mode { background: #fff5f5; }
+    tr.bulk-selected { outline: 2px solid #E53935; outline-offset: -2px; }
+    .bulk-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border: 1px solid #f1b5b5;
+      background: #fffafa;
+      margin: 12px 0;
+    }
+    .bulk-actions { display: flex; gap: 8px; align-items: center; }
+    .bulk-count { font-weight: bold; }
+    .icon-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #f1f1f1;
+      color: #444;
+      text-decoration: none;
+    }
+    .icon-btn:hover { background: #e3e3e3; }
     .new-todo-btn {
       display: inline-flex;
       align-items: center;
@@ -30,10 +55,10 @@
     .new-todo-btn:hover { background: #1D4ED8; }
   </style>
 </head>
-<body>
+<body th:classappend="${bulk} ? 'bulk-mode' : ''">
   <h1>ToDo一覧</h1>
 
-  <form method="get" th:action="@{/todos}">
+  <form method="get" th:action="@{/todos}" th:if="${!bulk}">
     <label>検索:
       <input type="text" name="q" th:value="${q}">
     </label>
@@ -56,15 +81,31 @@
     <a th:href="@{/todos}">クリア</a>
   </form>
 
-  <p>
+  <p th:if="${!bulk}">
     <a class="new-todo-btn" th:href="@{/todos/new}" aria-label="新規登録">＋</a>
+    <a class="icon-btn" th:href="@{/todos(bulk=true)}" aria-label="一括削除モード">🗑</a>
   </p>
+
+  <form id="bulk-form" method="post" th:if="${bulk}" th:action="@{/todos/bulk/confirm}">
+    <div class="bulk-header">
+      <span>🗑 一括削除モード</span>
+      <a th:href="@{/todos}">一覧に戻る</a>
+      <span class="bulk-count"><span id="bulk-count">0</span>件選択中</span>
+      <div class="bulk-actions">
+        <button type="button" id="bulk-select-all">全選択</button>
+        <button type="button" id="bulk-clear">全解除</button>
+        <button type="submit">削除</button>
+      </div>
+    </div>
+    <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+  </form>
 
   <div th:if="${#lists.isEmpty(todos)}" class="message">データはありません</div>
 
   <table th:if="${!#lists.isEmpty(todos)}">
     <thead>
       <tr>
+        <th th:if="${bulk}">削除</th>
         <th></th>
         <th>No</th>
         <th>タイトル</th>
@@ -76,7 +117,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr th:each="todo, stat : ${todos}" th:classappend="${todo.completed} ? 'completed-row' : 'incomplete-row'">
+      <tr th:each="todo, stat : ${todos}"
+          th:class="${todo.completed} ? 'completed-row' : 'incomplete-row'"
+          th:classappend="${bulk} ? ' bulk-row' : ''">
+        <td th:if="${bulk}" class="checkbox-cell">
+          <input class="bulk-select" type="checkbox" name="ids" th:value="${todo.id}" form="bulk-form">
+        </td>
         <td class="checkbox-cell">
           <form method="post" th:action="@{/todos/{id}/toggle(id=${todo.id})}">
             <input type="checkbox" th:checked="${todo.completed}" onchange="this.form.submit()">
@@ -95,5 +141,63 @@
       </tr>
     </tbody>
   </table>
+
+  <script th:if="${bulk}">
+    const bulkCount = document.getElementById('bulk-count');
+    const selectAllBtn = document.getElementById('bulk-select-all');
+    const clearBtn = document.getElementById('bulk-clear');
+    const checkboxes = Array.from(document.querySelectorAll('input.bulk-select'));
+
+    const updateCount = () => {
+      const checkedCount = checkboxes.filter((cb) => cb.checked).length;
+      bulkCount.textContent = checkedCount;
+    };
+
+    const syncRow = (cb) => {
+      const row = cb.closest('tr');
+      if (row) {
+        row.classList.toggle('bulk-selected', cb.checked);
+      }
+    };
+
+    checkboxes.forEach((cb) => {
+      cb.addEventListener('change', () => {
+        syncRow(cb);
+        updateCount();
+      });
+    });
+
+    document.querySelectorAll('tr.bulk-row').forEach((row) => {
+      row.addEventListener('click', (event) => {
+        if (event.target.closest('a') || event.target.closest('button') || event.target.closest('input')) {
+          return;
+        }
+        const cb = row.querySelector('input.bulk-select');
+        if (cb) {
+          cb.checked = !cb.checked;
+          syncRow(cb);
+          updateCount();
+        }
+      });
+    });
+
+    selectAllBtn.addEventListener('click', () => {
+      checkboxes.forEach((cb) => {
+        cb.checked = true;
+        syncRow(cb);
+      });
+      updateCount();
+    });
+
+    clearBtn.addEventListener('click', () => {
+      checkboxes.forEach((cb) => {
+        cb.checked = false;
+        syncRow(cb);
+      });
+      updateCount();
+    });
+
+    updateCount();
+  </script>
 </body>
 </html>

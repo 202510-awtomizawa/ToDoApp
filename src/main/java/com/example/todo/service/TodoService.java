@@ -30,6 +30,10 @@ public class TodoService {
     return todoRepository.findById(id);
   }
 
+  public List<Todo> findAllByIds(List<Long> ids) {
+    return todoRepository.findAllById(ids);
+  }
+
   @Transactional
   public Todo save(Todo todo) {
     if (todo.getId() != null) {
@@ -51,6 +55,11 @@ public class TodoService {
   @Transactional
   public void delete(Long id) {
     todoRepository.deleteById(id);
+  }
+
+  @Transactional
+  public void deleteAllByIds(List<Long> ids) {
+    todoRepository.deleteAllByIdInBatch(ids);
   }
 }
 
