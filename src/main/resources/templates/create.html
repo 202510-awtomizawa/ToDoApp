@@ -45,6 +45,15 @@
           <label><input type="checkbox" th:field="*{completed}"> 完了</label>
         </td>
       </tr>
+      <tr>
+        <th>カテゴリ</th>
+        <td>
+          <select th:field="*{category.id}">
+            <option value="">未分類</option>
+            <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+          </select>
+        </td>
+      </tr>
     </table>
     <p>
       <button type="submit">確認</button>

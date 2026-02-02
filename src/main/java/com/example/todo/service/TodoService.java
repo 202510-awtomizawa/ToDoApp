@@ -7,27 +7,28 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.todo.entity.Category;
 import com.example.todo.entity.Todo;
+import com.example.todo.repository.CategoryRepository;
 import com.example.todo.repository.TodoRepository;
 
 @Service
 public class TodoService {
   private final TodoRepository todoRepository;
+  private final CategoryRepository categoryRepository;
 
-  public TodoService(TodoRepository todoRepository) {
+  public TodoService(TodoRepository todoRepository, CategoryRepository categoryRepository) {
     this.todoRepository = todoRepository;
+    this.categoryRepository = categoryRepository;
   }
 
-  public List<Todo> findAll(String keyword, Sort sort) {
-    if (keyword == null || keyword.trim().isEmpty()) {
-      return todoRepository.findAll(sort);
-    }
-    String q = keyword.trim();
-    return todoRepository.findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCase(q, q, sort);
+  public List<Todo> findAll(String keyword, Long categoryId, Sort sort) {
+    String q = keyword == null ? null : keyword.trim();
+    return todoRepository.search(q, categoryId, sort);
   }
 
   public Optional<Todo> findById(Long id) {
-    return todoRepository.findById(id);
+    return todoRepository.findWithCategoryById(id);
   }
 
   public List<Todo> findAllByIds(List<Long> ids) {
@@ -41,6 +42,7 @@ public class TodoService {
         todo.setCreatedAt(existing.getCreatedAt());
       });
     }
+    normalizeCategory(todo);
     return todoRepository.save(todo);
   }
 
@@ -60,6 +62,16 @@ public class TodoService {
   @Transactional
   public void deleteAllByIds(List<Long> ids) {
     todoRepository.deleteAllByIdInBatch(ids);
+  }
+
+  private void normalizeCategory(Todo todo) {
+    if (todo.getCategory() == null || todo.getCategory().getId() == null) {
+      todo.setCategory(null);
+      return;
+    }
+    Long categoryId = todo.getCategory().getId();
+    Optional<Category> category = categoryRepository.findById(categoryId);
+    todo.setCategory(category.orElse(null));
   }
 }
 

@@ -53,6 +53,16 @@
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
     .new-todo-btn:hover { background: #1D4ED8; }
+    .category-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body th:classappend="${bulk} ? 'bulk-mode' : ''">
@@ -75,6 +85,15 @@
       <select name="dir" th:value="${dir}">
         <option value="asc" th:selected="${dir == 'asc'}">昇順</option>
         <option value="desc" th:selected="${dir == 'desc'}">降順</option>
+      </select>
+    </label>
+    <label>カテゴリ:
+      <select name="categoryId">
+        <option value="" th:selected="${categoryId == null}">すべて</option>
+        <option th:each="cat : ${categories}"
+                th:value="${cat.id}"
+                th:text="${cat.name}"
+                th:selected="${categoryId != null && categoryId == cat.id}"></option>
       </select>
     </label>
     <button type="submit">検索/並び替え</button>
@@ -110,6 +129,7 @@
         <th>No</th>
         <th>タイトル</th>
         <th>作成者</th>
+        <th>カテゴリ</th>
         <th>状態</th>
         <th>作成日</th>
         <th>更新日</th>
@@ -132,6 +152,13 @@
         <td th:text="${stat.count}">1</td>
         <td th:text="${todo.title}">タイトル</td>
         <td th:text="${todo.author}">作成者</td>
+        <td>
+          <span class="category-badge"
+                th:if="${todo.category != null && todo.category.id != null}"
+                th:text="${todo.category.name}"
+                th:style="'background:' + ${todo.category.color} + ';'"></span>
+          <span th:if="${todo.category == null || todo.category.id == null}">未分類</span>
+        </td>
         <td th:text="${todo.completed ? '完了' : '未完了'}">未完了</td>
         <td th:text="${#temporals.format(todo.createdAt, 'yyyy-MM-dd HH:mm')}">2025-01-01 00:00</td>
         <td th:text="${#temporals.format(todo.updatedAt, 'yyyy-MM-dd HH:mm')}">2025-01-01 00:00</td>

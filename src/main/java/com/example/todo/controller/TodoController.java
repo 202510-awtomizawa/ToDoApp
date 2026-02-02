@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.todo.entity.Category;
 import com.example.todo.entity.Todo;
+import com.example.todo.repository.CategoryRepository;
 import com.example.todo.service.TodoService;
 
 import jakarta.validation.Valid;
@@ -24,23 +26,32 @@ import jakarta.validation.Valid;
 @RequestMapping("/todos")
 public class TodoController {
   private final TodoService todoService;
+  private final CategoryRepository categoryRepository;
 
-  public TodoController(TodoService todoService) {
+  public TodoController(TodoService todoService, CategoryRepository categoryRepository) {
     this.todoService = todoService;
+    this.categoryRepository = categoryRepository;
+  }
+
+  @ModelAttribute("categories")
+  public List<Category> categories() {
+    return categoryRepository.findAllByOrderByNameAsc();
   }
 
   @GetMapping
   public String index(
       @RequestParam(name = "q", required = false) String keyword,
+      @RequestParam(name = "categoryId", required = false) Long categoryId,
       @RequestParam(name = "sort", defaultValue = "createdAt") String sortField,
       @RequestParam(name = "dir", defaultValue = "desc") String direction,
       @RequestParam(name = "bulk", defaultValue = "false") boolean bulk,
       Model model) {
     Sort sort = Sort.by("completed").ascending()
         .and(Sort.by(Sort.Direction.fromString(direction), sortField));
-    List<Todo> todos = todoService.findAll(keyword, sort);
+    List<Todo> todos = todoService.findAll(keyword, categoryId, sort);
     model.addAttribute("todos", todos);
     model.addAttribute("q", keyword == null ? "" : keyword);
+    model.addAttribute("categoryId", categoryId);
     model.addAttribute("sort", sortField);
     model.addAttribute("dir", direction);
     model.addAttribute("bulk", bulk);
@@ -62,6 +73,9 @@ public class TodoController {
   public String confirm(@Valid @ModelAttribute("todo") Todo todo, BindingResult result) {
     if (result.hasErrors()) {
       return "create";
+    }
+    if (todo.getCategory() != null && todo.getCategory().getId() != null) {
+      categoryRepository.findById(todo.getCategory().getId()).ifPresent(todo::setCategory);
     }
     return "confirm";
   }
