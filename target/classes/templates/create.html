@@ -5,14 +5,20 @@
   <title>ToDo登録</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 24px; }
-    table { border-collapse: collapse; }
-    th, td { padding: 8px; border: 1px solid #ccc; }
-    th { background: #f5f5f5; text-align: left; width: 140px; }
+    .todo-form-page h1 { text-align: center; }
+    .todo-form-page form { text-align: center; }
+    .todo-form-page table { border-collapse: collapse; margin: 0 auto; }
+    .todo-form-page th, .todo-form-page td { padding: 8px; border: 1px solid #ccc; }
+    .todo-form-page th { background: #f5f5f5; text-align: left; width: 140px; }
+    .todo-form-page input[type="text"],
+    .todo-form-page input[type="date"],
+    .todo-form-page textarea,
+    .todo-form-page select { text-align: center; }
     .required { color: #c00; }
     .error { color: #c00; }
   </style>
 </head>
-<body>
+<body class="todo-form-page">
   <h1>ToDo登録</h1>
 
   <form method="post" th:action="@{/todos/confirm}" th:object="${todo}">

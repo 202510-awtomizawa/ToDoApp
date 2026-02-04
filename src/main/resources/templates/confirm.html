@@ -5,12 +5,15 @@
   <title>ToDo確認</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 24px; }
-    table { border-collapse: collapse; }
-    th, td { padding: 8px; border: 1px solid #ccc; }
-    th { background: #f5f5f5; text-align: left; width: 140px; }
+    .todo-confirm-page h1 { text-align: center; }
+    .todo-confirm-page table { border-collapse: collapse; margin: 0 auto; }
+    .todo-confirm-page th, .todo-confirm-page td { padding: 8px; border: 1px solid #ccc; text-align: center; }
+    .todo-confirm-page th { background: #f5f5f5; width: 140px; }
+    .todo-confirm-page .actions { text-align: center; margin-top: 12px; }
+    .todo-confirm-page p { text-align: center; }
   </style>
 </head>
-<body>
+<body class="todo-confirm-page">
   <h1>ToDo確認</h1>
   <p>上記で登録して良いですか？</p>
 
@@ -45,7 +48,8 @@
     </tr>
   </table>
 
-  <form method="post" th:action="@{/todos}" style="display:inline;">
+  <div class="actions">
+    <form method="post" th:action="@{/todos}" style="display:inline;">
     <input type="hidden" name="id" th:value="${todo.id}">
     <input type="hidden" name="author" th:value="${todo.author}">
     <input type="hidden" name="title" th:value="${todo.title}">
@@ -57,7 +61,7 @@
     <button type="submit">登録</button>
   </form>
 
-  <form method="post" th:action="@{/todos/new}" style="display:inline;">
+    <form method="post" th:action="@{/todos/new}" style="display:inline;">
     <input type="hidden" name="id" th:value="${todo.id}">
     <input type="hidden" name="author" th:value="${todo.author}">
     <input type="hidden" name="title" th:value="${todo.title}">
@@ -68,5 +72,6 @@
     <input type="hidden" name="category.id" th:value="${todo.category != null ? todo.category.id : ''}">
     <button type="submit">修正</button>
   </form>
+  </div>
 </body>
 </html>

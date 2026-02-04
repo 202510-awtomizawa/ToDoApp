@@ -5,7 +5,9 @@
   <title>ログイン</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 24px; }
-    .login-box { max-width: 360px; padding: 16px; border: 1px solid #ddd; border-radius: 8px; }
+    .login-page h1 { text-align: center; }
+    .login-page .login-box { max-width: 360px; padding: 16px; border: 1px solid #ddd; border-radius: 8px; margin: 0 auto; }
+    .login-page form { text-align: center; }
     .row { margin-bottom: 12px; }
     label { display: block; margin-bottom: 4px; }
     input { width: 100%; padding: 8px; box-sizing: border-box; }
@@ -13,7 +15,7 @@
     .message { color: #4b5563; margin-bottom: 8px; }
   </style>
 </head>
-<body>
+<body class="login-page">
   <h1>ログイン</h1>
   <div class="login-box">
     <div class="error" th:if="${param.error}">ユーザー名またはパスワードが違います。</div>
