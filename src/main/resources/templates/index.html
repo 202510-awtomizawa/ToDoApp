@@ -78,7 +78,7 @@
 <body th:classappend="${bulk} ? 'bulk-mode' : ''">
   <h1>ToDo一覧</h1>
 
-  <form method="get" th:action="@{/todos}" th:if="${!bulk}">
+  <form id="search-form" method="get" th:action="@{/todos}" th:if="${!bulk}">
     <label>検索:
       <input type="text" name="q" th:value="${q}">
     </label>
@@ -116,12 +116,12 @@
                 th:selected="${priority != null && priority == p}"></option>
       </select>
     </label>
-    <button type="submit">検索/並び替え</button>
     <a th:href="@{/todos}">クリア</a>
   </form>
 
   <p th:if="${!bulk}">
     <a class="new-todo-btn" th:href="@{/todos/new}" aria-label="新規登録">＋</a>
+    <button class="icon-btn" type="submit" form="search-form" title="検索" aria-label="検索">🔍</button>
     <a class="icon-btn" th:href="@{/categories}" title="カテゴリ編集" aria-label="カテゴリ編集">🏷</a>
     <a class="icon-btn" th:href="@{/todos(bulk=true)}" aria-label="一括削除モード">🗑</a>
   </p>
