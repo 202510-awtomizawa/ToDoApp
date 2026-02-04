@@ -7,7 +7,7 @@
   <style>
     body { font-family: Arial, sans-serif; margin: 24px; }
     table { border-collapse: collapse; width: 100%; }
-    th, td { border: 1px solid #ccc; padding: 8px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
     th { background: #2884fc; color: #ffffff; }
     .actions form { display: inline; }
     .checkbox-cell { text-align: center; width: 40px; }
@@ -89,11 +89,18 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: relative;
+    }
+    .page-header h1 {
+      width: 100%;
+      text-align: center;
     }
     .icon-group {
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      position: absolute;
+      right: 0;
     }
     .csv-btn {
       display: inline-flex;
