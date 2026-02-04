@@ -58,6 +58,10 @@ public class Todo {
   @JoinColumn(name = "category_id")
   private Category category;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id")
+  private AppUser user;
+
   @Column(name = "created_at", nullable = false, updatable = false)
   private LocalDateTime createdAt;
 
@@ -166,6 +170,14 @@ public class Todo {
 
   public void setCategory(Category category) {
     this.category = category;
+  }
+
+  public AppUser getUser() {
+    return user;
+  }
+
+  public void setUser(AppUser user) {
+    this.user = user;
   }
 
   public LocalDateTime getCreatedAt() {

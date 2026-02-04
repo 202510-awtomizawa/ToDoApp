@@ -43,17 +43,22 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
       background: #2964E6;
       color: #E0F2FE;
-      font-size: 24px;
+      font-size: 36px;
       line-height: 1;
       text-decoration: none;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
     .new-todo-btn:hover { background: #1D4ED8; }
+    .new-todo-wrap {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 16px;
+    }
     .category-badge {
       display: inline-flex;
       align-items: center;
@@ -104,7 +109,6 @@
   <div class="page-header">
     <h1>ToDo一覧</h1>
     <p class="icon-group" th:if="${!bulk}">
-      <a class="new-todo-btn" th:href="@{/todos/new}" title="新規追加" aria-label="新規追加">＋</a>
       <button class="icon-btn" type="button" id="search-toggle" title="検索" aria-label="検索">🔍</button>
       <a class="icon-btn" th:href="@{/categories}" title="カテゴリ編集" aria-label="カテゴリ編集">🏷</a>
       <a class="icon-btn" th:href="@{/todos(bulk=true)}" title="一括削除モード" aria-label="一括削除モード">🗑</a>
@@ -231,6 +235,10 @@
       </tr>
     </tbody>
   </table>
+
+  <div class="new-todo-wrap" th:if="${!bulk}">
+    <a class="new-todo-btn" th:href="@{/todos/new}" title="新規登録" aria-label="新規登録">＋</a>
+  </div>
 
   <script th:if="${bulk}">
     const bulkCount = document.getElementById('bulk-count');

@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import com.example.todo.entity.AppUser;
 import com.example.todo.entity.Priority;
 import com.example.todo.entity.Todo;
 
@@ -23,15 +24,26 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
           or lower(t.author) like lower(concat('%', :keyword, '%')))
         and (:categoryId is null or c.id = :categoryId)
         and (:priority is null or t.priority = :priority)
+        and (t.user = :user)
       """)
   List<Todo> search(
       @Param("keyword") String keyword,
       @Param("categoryId") Long categoryId,
       @Param("priority") Priority priority,
+      @Param("user") AppUser user,
       Sort sort);
 
   @EntityGraph(attributePaths = "category")
   Optional<Todo> findWithCategoryById(Long id);
+
+  @EntityGraph(attributePaths = "category")
+  Optional<Todo> findByIdAndUser(Long id, AppUser user);
+
+  @EntityGraph(attributePaths = "category")
+  List<Todo> findAllByIdInAndUser(List<Long> ids, AppUser user);
+
+  @EntityGraph(attributePaths = "category")
+  List<Todo> findAllByUser(AppUser user, Sort sort);
 
   @EntityGraph(attributePaths = "category")
   List<Todo> findByDeadlineBefore(LocalDate date);

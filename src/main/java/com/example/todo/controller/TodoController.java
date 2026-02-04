@@ -10,6 +10,9 @@ import java.time.format.DateTimeFormatter;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,11 +25,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.todo.entity.Category;
+import com.example.todo.entity.AppUser;
 import com.example.todo.entity.Priority;
 import com.example.todo.entity.Todo;
 import com.example.todo.service.CsvExportService;
 import com.example.todo.service.CategoryService;
 import com.example.todo.service.TodoService;
+import com.example.todo.repository.UserRepository;
 
 import jakarta.validation.Valid;
 
@@ -36,11 +41,17 @@ public class TodoController {
   private final TodoService todoService;
   private final CategoryService categoryService;
   private final CsvExportService csvExportService;
+  private final UserRepository userRepository;
 
-  public TodoController(TodoService todoService, CategoryService categoryService, CsvExportService csvExportService) {
+  public TodoController(
+      TodoService todoService,
+      CategoryService categoryService,
+      CsvExportService csvExportService,
+      UserRepository userRepository) {
     this.todoService = todoService;
     this.categoryService = categoryService;
     this.csvExportService = csvExportService;
+    this.userRepository = userRepository;
   }
 
   @ModelAttribute("categories")
@@ -61,10 +72,12 @@ public class TodoController {
       @RequestParam(name = "sort", defaultValue = "createdAt") String sortField,
       @RequestParam(name = "dir", defaultValue = "desc") String direction,
       @RequestParam(name = "bulk", defaultValue = "false") boolean bulk,
+      @AuthenticationPrincipal UserDetails userDetails,
       Model model) {
+    AppUser user = getCurrentUser(userDetails);
     Sort sort = Sort.by("completed").ascending()
         .and(Sort.by(Sort.Direction.fromString(direction), sortField));
-    List<Todo> todos = todoService.findAll(keyword, categoryId, priority, sort);
+    List<Todo> todos = todoService.findAll(keyword, categoryId, priority, user, sort);
     model.addAttribute("todos", todos);
     model.addAttribute("q", keyword == null ? "" : keyword);
     model.addAttribute("categoryId", categoryId);
@@ -95,72 +108,107 @@ public class TodoController {
   }
 
   @PostMapping
-  public String save(@ModelAttribute("todo") Todo todo, RedirectAttributes redirectAttributes) {
-    Todo saved = todoService.save(todo);
+  public String save(@ModelAttribute("todo") Todo todo,
+      RedirectAttributes redirectAttributes,
+      @AuthenticationPrincipal UserDetails userDetails) {
+    AppUser user = getCurrentUser(userDetails);
+    Todo saved = todoService.saveForUser(todo, user);
     redirectAttributes.addAttribute("id", saved.getId());
     return "redirect:/todos/complete";
   }
 
   @GetMapping("/complete")
-  public String complete(@RequestParam("id") Long id, Model model) {
-    Optional<Todo> todoOpt = todoService.findById(id);
+  public String complete(@RequestParam("id") Long id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+    AppUser user = getCurrentUser(userDetails);
+    Optional<Todo> todoOpt = todoService.findByIdForUser(id, user);
     if (todoOpt.isEmpty()) {
-      return "redirect:/todos";
+      throw new AccessDeniedException("Not allowed");
     }
     model.addAttribute("todo", todoOpt.get());
     return "complete";
   }
 
   @GetMapping("/{id}/edit")
-  public String edit(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
-    Optional<Todo> todoOpt = todoService.findById(id);
+  public String edit(@PathVariable("id") Long id,
+      Model model,
+      RedirectAttributes redirectAttributes,
+      @AuthenticationPrincipal UserDetails userDetails) {
+    AppUser user = getCurrentUser(userDetails);
+    Optional<Todo> todoOpt = todoService.findByIdForUser(id, user);
     if (todoOpt.isEmpty()) {
-      redirectAttributes.addFlashAttribute("error", "???ToDo???????????");
-      return "redirect:/todos";
+      throw new AccessDeniedException("Not allowed");
     }
     model.addAttribute("todo", todoOpt.get());
     return "create";
   }
 
   @PostMapping("/{id}/delete")
-  public String delete(@PathVariable("id") Long id) {
-    todoService.delete(id);
+  public String delete(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails userDetails) {
+    AppUser user = getCurrentUser(userDetails);
+    Optional<Todo> todoOpt = todoService.findByIdForUser(id, user);
+    if (todoOpt.isEmpty()) {
+      throw new AccessDeniedException("Not allowed");
+    }
+    todoService.delete(id, user);
     return "redirect:/todos";
   }
 
   @PostMapping("/{id}/toggle")
-  public String toggle(@PathVariable("id") Long id) {
-    todoService.toggleCompleted(id);
+  public String toggle(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails userDetails) {
+    AppUser user = getCurrentUser(userDetails);
+    Optional<Todo> todoOpt = todoService.findByIdForUser(id, user);
+    if (todoOpt.isEmpty()) {
+      throw new AccessDeniedException("Not allowed");
+    }
+    todoService.toggleCompleted(id, user);
     return "redirect:/todos";
   }
 
   @GetMapping("/{id}/toggle")
-  public String toggleGet(@PathVariable("id") Long id) {
-    todoService.toggleCompleted(id);
+  public String toggleGet(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails userDetails) {
+    AppUser user = getCurrentUser(userDetails);
+    Optional<Todo> todoOpt = todoService.findByIdForUser(id, user);
+    if (todoOpt.isEmpty()) {
+      throw new AccessDeniedException("Not allowed");
+    }
+    todoService.toggleCompleted(id, user);
     return "redirect:/todos";
   }
 
   @PostMapping("/bulk/confirm")
-  public String bulkConfirm(@RequestParam(name = "ids", required = false) List<Long> ids, Model model) {
+  public String bulkConfirm(@RequestParam(name = "ids", required = false) List<Long> ids,
+      Model model,
+      @AuthenticationPrincipal UserDetails userDetails) {
     if (ids == null || ids.isEmpty()) {
       return "redirect:/todos?bulk=true";
     }
-    List<Todo> todos = todoService.findAllByIds(ids);
+    AppUser user = getCurrentUser(userDetails);
+    List<Todo> todos = todoService.findAllByIdsForUser(ids, user);
+    if (todos.size() != ids.size()) {
+      throw new AccessDeniedException("Not allowed");
+    }
     model.addAttribute("todos", todos);
     model.addAttribute("ids", ids);
     return "bulk_confirm";
   }
 
   @PostMapping("/bulk/delete")
-  public String bulkDelete(@RequestParam(name = "ids", required = false) List<Long> ids) {
+  public String bulkDelete(@RequestParam(name = "ids", required = false) List<Long> ids,
+      @AuthenticationPrincipal UserDetails userDetails) {
     if (ids != null && !ids.isEmpty()) {
-      todoService.deleteAllByIds(ids);
+      AppUser user = getCurrentUser(userDetails);
+      List<Todo> todos = todoService.findAllByIdsForUser(ids, user);
+      if (todos.size() != ids.size()) {
+        throw new AccessDeniedException("Not allowed");
+      }
+      todoService.deleteAllByIds(ids, user);
     }
     return "redirect:/todos";
   }
 
   @GetMapping("/export/csv")
-  public void exportCsv(HttpServletResponse response) throws IOException {
+  public void exportCsv(HttpServletResponse response, @AuthenticationPrincipal UserDetails userDetails) throws IOException {
+    AppUser user = getCurrentUser(userDetails);
     response.setContentType("text/csv; charset=UTF-8");
 
     String filename = "todo_export_"
@@ -170,8 +218,16 @@ public class TodoController {
 
     try (PrintWriter writer = response.getWriter()) {
       writer.write('\uFEFF');
-      csvExportService.writeCsv(writer, todoService.findAll());
+      csvExportService.writeCsv(writer, todoService.findAllByUser(user));
     }
+  }
+
+  private AppUser getCurrentUser(UserDetails userDetails) {
+    if (userDetails == null) {
+      throw new AccessDeniedException("User not authenticated");
+    }
+    return userRepository.findByUsername(userDetails.getUsername())
+        .orElseThrow(() -> new AccessDeniedException("User not found"));
   }
 }
 
