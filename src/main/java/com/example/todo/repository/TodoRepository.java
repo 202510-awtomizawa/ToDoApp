@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import com.example.todo.entity.Priority;
 import com.example.todo.entity.Todo;
 
@@ -31,5 +32,8 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
 
   @EntityGraph(attributePaths = "category")
   Optional<Todo> findWithCategoryById(Long id);
+
+  @EntityGraph(attributePaths = "category")
+  List<Todo> findByDeadlineBefore(LocalDate date);
 }
 

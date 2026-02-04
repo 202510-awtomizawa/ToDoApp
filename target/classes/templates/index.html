@@ -83,6 +83,19 @@
       align-items: center;
       gap: 8px;
     }
+    .csv-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      background: #f8fafc;
+      color: #111827;
+      text-decoration: none;
+      font-size: 13px;
+    }
+    .csv-btn:hover { background: #eef2f7; }
     #search-panel { display: none; }
     #search-panel.open { display: block; }
   </style>
@@ -95,6 +108,7 @@
       <button class="icon-btn" type="button" id="search-toggle" title="検索" aria-label="検索">🔍</button>
       <a class="icon-btn" th:href="@{/categories}" title="カテゴリ編集" aria-label="カテゴリ編集">🏷</a>
       <a class="icon-btn" th:href="@{/todos(bulk=true)}" title="一括削除モード" aria-label="一括削除モード">🗑</a>
+      <a class="csv-btn" th:href="@{/todos/export/csv}" title="CSVダウンロード" aria-label="CSVダウンロード">⬇ CSV</a>
     </p>
   </div>
 

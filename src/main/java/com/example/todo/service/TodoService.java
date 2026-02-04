@@ -30,6 +30,10 @@ public class TodoService {
     return todoRepository.findWithCategoryById(id);
   }
 
+  public List<Todo> findAll() {
+    return todoRepository.findAll(Sort.by("createdAt").descending());
+  }
+
   public List<Todo> findAllByIds(List<Long> ids) {
     return todoRepository.findAllById(ids);
   }
