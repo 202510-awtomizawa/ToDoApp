@@ -2,6 +2,12 @@ package com.example.todo.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -18,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.todo.entity.Category;
 import com.example.todo.entity.Priority;
 import com.example.todo.entity.Todo;
+import com.example.todo.service.CsvExportService;
 import com.example.todo.service.CategoryService;
 import com.example.todo.service.TodoService;
 
@@ -28,10 +35,12 @@ import jakarta.validation.Valid;
 public class TodoController {
   private final TodoService todoService;
   private final CategoryService categoryService;
+  private final CsvExportService csvExportService;
 
-  public TodoController(TodoService todoService, CategoryService categoryService) {
+  public TodoController(TodoService todoService, CategoryService categoryService, CsvExportService csvExportService) {
     this.todoService = todoService;
     this.categoryService = categoryService;
+    this.csvExportService = csvExportService;
   }
 
   @ModelAttribute("categories")
@@ -148,6 +157,21 @@ public class TodoController {
       todoService.deleteAllByIds(ids);
     }
     return "redirect:/todos";
+  }
+
+  @GetMapping("/export/csv")
+  public void exportCsv(HttpServletResponse response) throws IOException {
+    response.setContentType("text/csv; charset=UTF-8");
+
+    String filename = "todo_export_"
+        + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
+        + ".csv";
+    response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+
+    try (PrintWriter writer = response.getWriter()) {
+      writer.write('\uFEFF');
+      csvExportService.writeCsv(writer, todoService.findAll());
+    }
   }
 }
 

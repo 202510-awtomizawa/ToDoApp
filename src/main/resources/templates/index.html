@@ -125,10 +125,11 @@
           <option value="updatedAt" th:selected="${sort == 'updatedAt'}">更新日</option>
           <option value="title" th:selected="${sort == 'title'}">タイトル</option>
           <option value="author" th:selected="${sort == 'author'}">作成者</option>
-          <option value="completed" th:selected="${sort == 'completed'}">状態</option>
-          <option value="priority" th:selected="${sort == 'priority'}">優先度</option>
-        </select>
-      </label>
+        <option value="completed" th:selected="${sort == 'completed'}">状態</option>
+        <option value="priority" th:selected="${sort == 'priority'}">優先度</option>
+        <option value="deadline" th:selected="${sort == 'deadline'}">期限</option>
+      </select>
+    </label>
       <label>順序:
         <select name="dir" th:value="${dir}">
           <option value="asc" th:selected="${dir == 'asc'}">昇順</option>
@@ -183,6 +184,7 @@
         <th>作成者</th>
         <th>カテゴリ</th>
         <th>優先度</th>
+        <th>期限</th>
         <th>状態</th>
         <th>作成日</th>
         <th>更新日</th>
@@ -217,6 +219,8 @@
                 th:text="${todo.priority.displayName}"
                 th:classappend="' ' + ${todo.priority.cssClass}"></span>
         </td>
+        <td th:classappend="${((todo.deadline != null && todo.isOverdue()) ? ' deadline-overdue' : '') + ((todo.deadline != null && todo.getDaysUntilDeadline() == 0) ? ' deadline-today' : '') + ((todo.deadline != null && todo.getDaysUntilDeadline() > 0 && todo.getDaysUntilDeadline() <= 3) ? ' deadline-soon' : '')}"
+            th:text="${todo.deadline != null ? #temporals.format(todo.deadline, 'yyyy/MM/dd') : ''}"></td>
         <td th:text="${todo.completed ? '完了' : '未完了'}">未完了</td>
         <td th:text="${#temporals.format(todo.createdAt, 'yyyy-MM-dd HH:mm')}">2025-01-01 00:00</td>
         <td th:text="${#temporals.format(todo.updatedAt, 'yyyy-MM-dd HH:mm')}">2025-01-01 00:00</td>

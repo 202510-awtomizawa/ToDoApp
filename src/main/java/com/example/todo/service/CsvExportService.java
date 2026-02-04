@@ -2,6 +2,7 @@ package com.example.todo.service;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -14,6 +15,8 @@ import com.example.todo.entity.Todo;
 public class CsvExportService {
   private static final DateTimeFormatter DATE_TIME_FORMAT =
       DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+  private static final DateTimeFormatter DATE_FORMAT =
+      DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
   public void writeCsv(Writer writer, List<Todo> todos) throws IOException {
     writer.write(String.join(",",
@@ -27,7 +30,7 @@ public class CsvExportService {
           safe(todo.getDetail()),
           safe(todo.getPriority() == null ? null : todo.getPriority().getDisplayName()),
           safe(todo.getCategory() == null ? null : todo.getCategory().getName()),
-          safe(""),
+          safe(formatDate(todo.getDeadline())),
           safe(todo.isCompleted() ? "完了" : "未完了"),
           safe(formatDateTime(todo.getCreatedAt()))
       };
@@ -65,5 +68,9 @@ public class CsvExportService {
 
   private String formatDateTime(LocalDateTime value) {
     return value == null ? "" : DATE_TIME_FORMAT.format(value);
+  }
+
+  private String formatDate(LocalDate value) {
+    return value == null ? "" : DATE_FORMAT.format(value);
   }
 }

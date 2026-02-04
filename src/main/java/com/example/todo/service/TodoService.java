@@ -1,5 +1,6 @@
 package com.example.todo.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +37,10 @@ public class TodoService {
 
   public List<Todo> findAllByIds(List<Long> ids) {
     return todoRepository.findAllById(ids);
+  }
+
+  public List<Todo> findOverdue(LocalDate date) {
+    return todoRepository.findByDeadlineBefore(date);
   }
 
   @Transactional

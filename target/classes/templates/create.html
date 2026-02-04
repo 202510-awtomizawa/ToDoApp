@@ -54,6 +54,13 @@
         </td>
       </tr>
       <tr>
+        <th>期限</th>
+        <td>
+          <input type="date" th:field="*{deadline}"
+                 th:attr="min=${#temporals.format(#temporals.createToday(), 'yyyy-MM-dd')}">
+        </td>
+      </tr>
+      <tr>
         <th>カテゴリ</th>
         <td>
           <select th:field="*{category.id}">

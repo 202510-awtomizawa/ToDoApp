@@ -1,6 +1,8 @@
 package com.example.todo.entity;
 
 import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Column;
@@ -18,6 +20,7 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "todo")
@@ -46,6 +49,10 @@ public class Todo {
   @Enumerated(EnumType.STRING)
   @Column(nullable = false, length = 10)
   private Priority priority = Priority.MEDIUM;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  @Column
+  private LocalDate deadline;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "category_id")
@@ -132,6 +139,25 @@ public class Todo {
 
   public void setPriority(Priority priority) {
     this.priority = priority;
+  }
+
+  public LocalDate getDeadline() {
+    return deadline;
+  }
+
+  public void setDeadline(LocalDate deadline) {
+    this.deadline = deadline;
+  }
+
+  public boolean isOverdue() {
+    return deadline != null && deadline.isBefore(LocalDate.now());
+  }
+
+  public Integer getDaysUntilDeadline() {
+    if (deadline == null) {
+      return null;
+    }
+    return Math.toIntExact(ChronoUnit.DAYS.between(LocalDate.now(), deadline));
   }
 
   public Category getCategory() {

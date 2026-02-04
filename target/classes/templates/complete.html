@@ -36,6 +36,10 @@
       <td th:text="${todo.priority.displayName}">中</td>
     </tr>
     <tr>
+      <th>期限</th>
+      <td th:text="${todo.deadline != null ? #temporals.format(todo.deadline, 'yyyy/MM/dd') : ''}"></td>
+    </tr>
+    <tr>
       <th>カテゴリ</th>
       <td th:text="${(todo.category != null && todo.category.id != null) ? todo.category.name : '未分類'}">未分類</td>
     </tr>
