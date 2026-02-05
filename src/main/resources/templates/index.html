@@ -95,6 +95,24 @@
       width: 100%;
       text-align: center;
     }
+    .todo-header-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 12px 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+      margin-bottom: 12px;
+      box-sizing: border-box;
+    }
+    .todo-header-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+    }
+    .todo-header-icon {
+      font-size: 20px;
+    }
     .icon-group {
       display: inline-flex;
       align-items: center;
@@ -117,6 +135,13 @@
     .csv-btn:hover { background: #eef2f7; }
     #search-panel { display: none; }
     #search-panel.open { display: block; }
+    .todo-table-card {
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      box-sizing: border-box;
+    }
     .sidebar {
       position: fixed;
       top: 0;
@@ -212,8 +237,8 @@
   </aside>
 
   <div class="main-content">
-    <div class="page-header">
-      <h1>ToDo一覧</h1>
+    <div class="page-header todo-header-card">
+      <h1 class="todo-header-title"><span class="todo-header-icon">📋</span>ToDo一覧</h1>
     </div>
 
   <div id="search-panel"
@@ -278,62 +303,64 @@
 
   <div th:if="${#lists.isEmpty(todos)}" class="message">データはありません</div>
 
-  <table th:if="${!#lists.isEmpty(todos)}">
-    <thead>
-      <tr>
-        <th th:if="${bulk}">削除</th>
-        <th></th>
-        <th>No</th>
-        <th>タイトル</th>
-        <th>作成者</th>
-        <th>カテゴリ</th>
-        <th>優先度</th>
-        <th>期限</th>
-        <th>状態</th>
-        <th>作成日</th>
-        <th>更新日</th>
-        <th>操作</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr th:each="todo, stat : ${todos}"
-          th:class="${todo.completed} ? 'completed-row' : 'incomplete-row'"
-          th:classappend="${bulk} ? ' bulk-row' : ''">
-        <td th:if="${bulk}" class="checkbox-cell">
-          <input class="bulk-select" type="checkbox" name="ids" th:value="${todo.id}" form="bulk-form">
-        </td>
-        <td class="checkbox-cell">
-          <form method="post" th:action="@{/todos/{id}/toggle(id=${todo.id})}">
-            <input type="checkbox" th:checked="${todo.completed}" onchange="this.form.submit()">
-            <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-          </form>
-        </td>
-        <td th:text="${stat.count}">1</td>
-        <td th:text="${todo.title}">タイトル</td>
-        <td th:text="${todo.author}">作成者</td>
-        <td>
-          <span class="category-badge"
-                th:if="${todo.category != null && todo.category.id != null}"
-                th:text="${todo.category.name}"
-                th:style="'background:' + ${todo.category.color} + ';'"></span>
-          <span th:if="${todo.category == null || todo.category.id == null}">未分類</span>
-        </td>
-        <td>
-          <span class="priority-badge"
-                th:text="${todo.priority.displayName}"
-                th:classappend="' ' + ${todo.priority.cssClass}"></span>
-        </td>
-        <td th:classappend="${((todo.deadline != null && todo.isOverdue()) ? ' deadline-overdue' : '') + ((todo.deadline != null && todo.getDaysUntilDeadline() == 0) ? ' deadline-today' : '') + ((todo.deadline != null && todo.getDaysUntilDeadline() > 0 && todo.getDaysUntilDeadline() <= 3) ? ' deadline-soon' : '')}"
-            th:text="${todo.deadline != null ? #temporals.format(todo.deadline, 'yyyy/MM/dd') : ''}"></td>
-        <td th:text="${todo.completed ? '完了' : '未完了'}">未完了</td>
-        <td th:text="${#temporals.format(todo.createdAt, 'yyyy-MM-dd HH:mm')}">2025-01-01 00:00</td>
-        <td th:text="${#temporals.format(todo.updatedAt, 'yyyy-MM-dd HH:mm')}">2025-01-01 00:00</td>
-        <td class="actions">
-          <a th:href="@{/todos/{id}/edit(id=${todo.id})}">編集</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="todo-table-card" th:if="${!#lists.isEmpty(todos)}">
+    <table>
+      <thead>
+        <tr>
+          <th th:if="${bulk}">削除</th>
+          <th></th>
+          <th>No</th>
+          <th>タイトル</th>
+          <th>作成者</th>
+          <th>カテゴリ</th>
+          <th>優先度</th>
+          <th>期限</th>
+          <th>状態</th>
+          <th>作成日</th>
+          <th>更新日</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="todo, stat : ${todos}"
+            th:class="${todo.completed} ? 'completed-row' : 'incomplete-row'"
+            th:classappend="${bulk} ? ' bulk-row' : ''">
+          <td th:if="${bulk}" class="checkbox-cell">
+            <input class="bulk-select" type="checkbox" name="ids" th:value="${todo.id}" form="bulk-form">
+          </td>
+          <td class="checkbox-cell">
+            <form method="post" th:action="@{/todos/{id}/toggle(id=${todo.id})}">
+              <input type="checkbox" th:checked="${todo.completed}" onchange="this.form.submit()">
+              <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            </form>
+          </td>
+          <td th:text="${stat.count}">1</td>
+          <td th:text="${todo.title}">タイトル</td>
+          <td th:text="${todo.author}">作成者</td>
+          <td>
+            <span class="category-badge"
+                  th:if="${todo.category != null && todo.category.id != null}"
+                  th:text="${todo.category.name}"
+                  th:style="'background:' + ${todo.category.color} + ';'"></span>
+            <span th:if="${todo.category == null || todo.category.id == null}">未分類</span>
+          </td>
+          <td>
+            <span class="priority-badge"
+                  th:text="${todo.priority.displayName}"
+                  th:classappend="' ' + ${todo.priority.cssClass}"></span>
+          </td>
+          <td th:classappend="${((todo.deadline != null && todo.isOverdue()) ? ' deadline-overdue' : '') + ((todo.deadline != null && todo.getDaysUntilDeadline() == 0) ? ' deadline-today' : '') + ((todo.deadline != null && todo.getDaysUntilDeadline() > 0 && todo.getDaysUntilDeadline() <= 3) ? ' deadline-soon' : '')}"
+              th:text="${todo.deadline != null ? #temporals.format(todo.deadline, 'yyyy/MM/dd') : ''}"></td>
+          <td th:text="${todo.completed ? '完了' : '未完了'}">未完了</td>
+          <td th:text="${#temporals.format(todo.createdAt, 'yyyy-MM-dd HH:mm')}">2025-01-01 00:00</td>
+          <td th:text="${#temporals.format(todo.updatedAt, 'yyyy-MM-dd HH:mm')}">2025-01-01 00:00</td>
+          <td class="actions">
+            <a th:href="@{/todos/{id}/edit(id=${todo.id})}">編集</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <div class="new-todo-wrap" th:if="${!bulk}">
     <a class="new-todo-btn" th:href="@{/todos/new}" title="新規登録" aria-label="新規登録">＋</a>
