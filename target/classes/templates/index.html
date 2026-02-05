@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <title>ToDo一覧</title>
@@ -117,19 +117,104 @@
     .csv-btn:hover { background: #eef2f7; }
     #search-panel { display: none; }
     #search-panel.open { display: block; }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 100%;
+      background: #f8fafc;
+      border-right: 1px solid #e5e7eb;
+      padding: 24px 12px;
+      box-sizing: border-box;
+    }
+    .sidebar-title {
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sidebar-item { margin: 0; }
+    .sidebar-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 6px;
+      color: #111827;
+      text-decoration: none;
+      background: transparent;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .sidebar-link:hover {
+      background: #eef2f7;
+      border-color: #d1d5db;
+    }
+    .sidebar-icon {
+      width: 20px;
+      text-align: center;
+    }
+    .has-sidebar .main-content {
+      margin-left: 220px;
+    }
   </style>
 </head>
-<body th:classappend="${bulk} ? 'bulk-mode' : ''">
-  <div class="page-header">
-    <h1>ToDo一覧</h1>
-    <p class="icon-group" th:if="${!bulk}">
-      <button class="icon-btn" type="button" id="search-toggle" title="検索" aria-label="検索">🔍</button>
-      <a class="icon-btn" th:href="@{/categories}" title="カテゴリ編集" aria-label="カテゴリ編集">🏷</a>
-      <a class="icon-btn" th:href="@{/todos(bulk=true)}" title="一括削除モード" aria-label="一括削除モード">🗑</a>
-      <a class="csv-btn" th:href="@{/todos/export/csv}" title="CSVダウンロード" aria-label="CSVダウンロード">⬇ CSV</a>
-      <a class="csv-btn" th:href="@{/logout}" title="ログアウト" aria-label="ログアウト">ログアウト</a>
-    </p>
-  </div>
+<body th:classappend="${bulk} ? 'bulk-mode' : 'has-sidebar'">
+  <aside class="sidebar" th:if="${!bulk}">
+    <div class="sidebar-title">メニュー</div>
+    <ul class="sidebar-menu">
+      <li class="sidebar-item">
+        <button class="sidebar-link" type="button" id="search-toggle" title="検索" aria-label="検索">
+          <span class="sidebar-icon">🔍</span>
+          <span>検索</span>
+        </button>
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link" th:href="@{/todos(bulk=true)}" title="一括削除モード" aria-label="一括削除モード">
+          <span class="sidebar-icon">🗑</span>
+          <span>一括削除</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link" th:href="@{/categories}" title="カテゴリ編集" aria-label="カテゴリ編集">
+          <span class="sidebar-icon">🏷</span>
+          <span>カテゴリ編集</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link" th:href="@{/todos/export/csv}" title="CSVダウンロード" aria-label="CSVダウンロード">
+          <span class="sidebar-icon">⬇</span>
+          <span>CSVダウンロード</span>
+        </a>
+      </li>
+      <li class="sidebar-item" sec:authorize="isAuthenticated()">
+        <a class="sidebar-link" th:href="@{/logout}" title="ログアウト" aria-label="ログアウト">
+          <span class="sidebar-icon">👤</span>
+          <span>ログアウト</span>
+        </a>
+      </li>
+      <li class="sidebar-item" sec:authorize="isAnonymous()">
+        <a class="sidebar-link" th:href="@{/login}" title="ログイン" aria-label="ログイン">
+          <span class="sidebar-icon">👤</span>
+          <span>ログイン</span>
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <div class="main-content">
+    <div class="page-header">
+      <h1>ToDo一覧</h1>
+    </div>
 
   <div id="search-panel"
        th:if="${!bulk}"
@@ -252,6 +337,7 @@
 
   <div class="new-todo-wrap" th:if="${!bulk}">
     <a class="new-todo-btn" th:href="@{/todos/new}" title="新規登録" aria-label="新規登録">＋</a>
+  </div>
   </div>
 
   <script th:if="${bulk}">
