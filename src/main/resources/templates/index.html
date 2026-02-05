@@ -11,7 +11,16 @@
     th { background: #2884fc; color: #ffffff; }
     .actions form { display: inline; }
     .checkbox-cell { text-align: center; width: 40px; }
+    .col-check {
+      width: 48px;
+      min-width: 48px;
+      max-width: 48px;
+      text-align: center;
+      vertical-align: middle;
+    }
     .title-cell { text-align: left; width: 70%; }
+    .col-check { border-right: 0; }
+    .title-cell { border-left: 0; }
     .message { margin: 12px 0; color: #666; }
     .no-data { text-align: center; }
     .completed-row { background: #E2E8F0; color: #64748B; }
@@ -313,20 +322,14 @@
 
   <div class="todo-table-card" th:if="${!#lists.isEmpty(todos)}">
     <table>
-      <thead>
-        <tr>
-          <th th:if="${bulk}">削除</th>
-          <th>タイトル</th>
-        </tr>
-      </thead>
       <tbody>
         <tr th:each="todo, stat : ${todos}"
             th:class="${todo.completed} ? 'completed-row' : 'incomplete-row'"
             th:classappend="${bulk} ? ' bulk-row' : ''">
-          <td th:if="${bulk}" class="checkbox-cell">
+          <td th:if="${bulk}" class="checkbox-cell col-check">
             <input class="bulk-select" type="checkbox" name="ids" th:value="${todo.id}" form="bulk-form">
           </td>
-          <td class="checkbox-cell" th:if="${!bulk}">
+          <td class="checkbox-cell col-check" th:if="${!bulk}">
             <form method="post" th:action="@{/todos/{id}/toggle(id=${todo.id})}">
               <input type="checkbox" th:checked="${todo.completed}" onchange="this.form.submit()">
               <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
