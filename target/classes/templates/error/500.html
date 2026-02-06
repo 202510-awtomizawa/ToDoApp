@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>サーバーエラー</title>
+  <link rel="stylesheet" th:href="@{/style.css}">
+  <style>
+    .error-wrap {
+      max-width: 720px;
+      margin: 80px auto;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .error-title {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .error-message {
+      color: #555;
+      margin-bottom: 24px;
+    }
+
+    .error-actions a {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 6px;
+      background: #2563eb;
+      color: #fff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="error-wrap">
+    <div class="error-title">サーバーエラーが発生しました</div>
+    <div class="error-message" th:text="${message} ?: 'しばらく時間をおいて再度お試しください。'">しばらく時間をおいて再度お試しください。</div>
+    <div class="error-actions">
+      <a th:href="@{/todos}">ToDo一覧へ戻る</a>
+    </div>
+  </div>
+</body>
+
+</html>
