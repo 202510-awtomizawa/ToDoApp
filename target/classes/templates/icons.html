@@ -43,6 +43,9 @@
     <span class="material-icons" th:text="${icon}">search</span>
     <span class="sidebar-icon-label" th:text="${label}">search</span>
   </span>
+  <span th:fragment="micon(name)" class="sidebar-icon">
+    <span class="material-icons" th:text="${name}">search</span>
+  </span>
   <div class="icon-grid">
     <div class="icon-item">
       <span class="material-icons">home</span>
