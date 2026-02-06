@@ -27,7 +27,7 @@
       <tr th:each="todo : ${todos}">
         <td th:text="${todo.title}">タイトル</td>
         <td th:text="${todo.author}">作成者</td>
-        <td th:text="${todo.completed} ? #{status.done} : #{status.todo}">未完了</td>
+        <td th:text="${todo.completed} ? #messages.msg('status.done') : #messages.msg('status.todo')">未完了</td>
       </tr>
     </tbody>
   </table>
