@@ -25,11 +25,11 @@ public class UserDataInitializer implements CommandLineRunner {
   @Transactional
   @Override
   public void run(String... args) {
-    createOrFixUser("admin", "password", "admin@example.com");
-    createOrFixUser("user1", "password", "user1@example.com");
+    createOrFixUser("admin", "password", "admin@example.com", "ADMIN");
+    createOrFixUser("user1", "password", "user1@example.com", "USER");
   }
 
-  private void createOrFixUser(String username, String rawPassword, String email) {
+  private void createOrFixUser(String username, String rawPassword, String email, String role) {
     AppUser user = userRepository.findByUsername(username).orElseGet(AppUser::new);
     boolean isNew = user.getId() == null;
 
@@ -38,6 +38,9 @@ public class UserDataInitializer implements CommandLineRunner {
     }
     if (user.getEmail() == null || user.getEmail().isBlank()) {
       user.setEmail(email);
+    }
+    if (user.getRole() == null || user.getRole().isBlank()) {
+      user.setRole(role);
     }
     user.setEnabled(true);
 

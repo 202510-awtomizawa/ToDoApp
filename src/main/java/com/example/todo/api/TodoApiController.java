@@ -46,7 +46,7 @@ public class TodoApiController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(ApiResponse.error("User not found", null));
     }
-    List<TodoResponse> todos = todoService.findAllByUser(user.get()).stream()
+    List<TodoResponse> todos = todoService.findAllByUserOrAll(user.get()).stream()
         .map(TodoResponse::fromEntity)
         .toList();
     return ResponseEntity.ok(ApiResponse.ok("OK", todos));
@@ -59,7 +59,7 @@ public class TodoApiController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(ApiResponse.error("User not found", null));
     }
-    return todoService.findByIdForUser(id, user.get())
+    return todoService.findByIdForUserOrAll(id, user.get())
         .map(todo -> ResponseEntity.ok(ApiResponse.ok("OK", TodoResponse.fromEntity(todo))))
         .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
             .body(ApiResponse.error("Todo not found", null)));
@@ -88,7 +88,7 @@ public class TodoApiController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(ApiResponse.error("User not found", null));
     }
-    Optional<Todo> existing = todoService.findByIdForUser(id, user.get());
+    Optional<Todo> existing = todoService.findByIdForUserOrAll(id, user.get());
     if (existing.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(ApiResponse.error("Todo not found", null));
@@ -107,7 +107,7 @@ public class TodoApiController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(ApiResponse.error("User not found", null));
     }
-    Optional<Todo> existing = todoService.findByIdForUser(id, user.get());
+    Optional<Todo> existing = todoService.findByIdForUserOrAll(id, user.get());
     if (existing.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(ApiResponse.error("Todo not found", null));

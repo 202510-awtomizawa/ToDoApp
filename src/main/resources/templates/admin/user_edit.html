@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>ユーザー編集</title>
+  <link rel="stylesheet" th:href="@{/style.css}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 24px;
+    }
+
+    .form-row {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .error {
+      color: #c00;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>ユーザー編集</h1>
+
+  <div>
+    <div>ユーザー名: <span th:text="${user.username}">user</span></div>
+    <div>メール: <span th:text="${user.email}">user@example.com</span></div>
+  </div>
+
+  <form method="post" th:action="@{/admin/users/{id}(id=${user.id})}" th:object="${form}">
+    <div class="form-row">
+      <label for="role">ロール</label>
+      <select id="role" th:field="*{role}">
+        <option value="USER">USER</option>
+        <option value="ADMIN">ADMIN</option>
+      </select>
+      <div class="error" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></div>
+    </div>
+
+    <div class="form-row">
+      <label>
+        <input type="checkbox" th:field="*{enabled}">
+        アカウント有効
+      </label>
+    </div>
+
+    <div class="form-row">
+      <button type="submit">更新</button>
+      <a th:href="@{/admin/users}">戻る</a>
+    </div>
+  </form>
+</body>
+
+</html>

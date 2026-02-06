@@ -77,7 +77,7 @@ public class TodoController {
     AppUser user = getCurrentUser(userDetails);
     Sort sort = Sort.by("completed").ascending()
         .and(Sort.by(Sort.Direction.fromString(direction), sortField));
-    List<Todo> todos = todoService.findAll(keyword, categoryId, priority, user, sort);
+    List<Todo> todos = todoService.findAllForUserOrAll(keyword, categoryId, priority, user, sort);
     model.addAttribute("todos", todos);
     model.addAttribute("q", keyword == null ? "" : keyword);
     model.addAttribute("categoryId", categoryId);
@@ -120,7 +120,7 @@ public class TodoController {
   @GetMapping("/complete")
   public String complete(@RequestParam("id") Long id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
     AppUser user = getCurrentUser(userDetails);
-    Optional<Todo> todoOpt = todoService.findByIdForUser(id, user);
+    Optional<Todo> todoOpt = todoService.findByIdForUserOrAll(id, user);
     if (todoOpt.isEmpty()) {
       throw new AccessDeniedException("Not allowed");
     }
@@ -134,7 +134,7 @@ public class TodoController {
       RedirectAttributes redirectAttributes,
       @AuthenticationPrincipal UserDetails userDetails) {
     AppUser user = getCurrentUser(userDetails);
-    Optional<Todo> todoOpt = todoService.findByIdForUser(id, user);
+    Optional<Todo> todoOpt = todoService.findByIdForUserOrAll(id, user);
     if (todoOpt.isEmpty()) {
       throw new AccessDeniedException("Not allowed");
     }
@@ -145,7 +145,7 @@ public class TodoController {
   @PostMapping("/{id}/delete")
   public String delete(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails userDetails) {
     AppUser user = getCurrentUser(userDetails);
-    Optional<Todo> todoOpt = todoService.findByIdForUser(id, user);
+    Optional<Todo> todoOpt = todoService.findByIdForUserOrAll(id, user);
     if (todoOpt.isEmpty()) {
       throw new AccessDeniedException("Not allowed");
     }
@@ -156,7 +156,7 @@ public class TodoController {
   @PostMapping("/{id}/toggle")
   public String toggle(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails userDetails) {
     AppUser user = getCurrentUser(userDetails);
-    Optional<Todo> todoOpt = todoService.findByIdForUser(id, user);
+    Optional<Todo> todoOpt = todoService.findByIdForUserOrAll(id, user);
     if (todoOpt.isEmpty()) {
       throw new AccessDeniedException("Not allowed");
     }
@@ -167,7 +167,7 @@ public class TodoController {
   @GetMapping("/{id}/toggle")
   public String toggleGet(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails userDetails) {
     AppUser user = getCurrentUser(userDetails);
-    Optional<Todo> todoOpt = todoService.findByIdForUser(id, user);
+    Optional<Todo> todoOpt = todoService.findByIdForUserOrAll(id, user);
     if (todoOpt.isEmpty()) {
       throw new AccessDeniedException("Not allowed");
     }
@@ -183,7 +183,7 @@ public class TodoController {
       return "redirect:/todos?bulk=true";
     }
     AppUser user = getCurrentUser(userDetails);
-    List<Todo> todos = todoService.findAllByIdsForUser(ids, user);
+    List<Todo> todos = todoService.findAllByIdsForUserOrAll(ids, user);
     if (todos.size() != ids.size()) {
       throw new AccessDeniedException("Not allowed");
     }
@@ -197,7 +197,7 @@ public class TodoController {
       @AuthenticationPrincipal UserDetails userDetails) {
     if (ids != null && !ids.isEmpty()) {
       AppUser user = getCurrentUser(userDetails);
-      List<Todo> todos = todoService.findAllByIdsForUser(ids, user);
+      List<Todo> todos = todoService.findAllByIdsForUserOrAll(ids, user);
       if (todos.size() != ids.size()) {
         throw new AccessDeniedException("Not allowed");
       }
@@ -218,7 +218,7 @@ public class TodoController {
 
     try (PrintWriter writer = response.getWriter()) {
       writer.write('\uFEFF');
-      csvExportService.writeCsv(writer, todoService.findAllByUser(user));
+      csvExportService.writeCsv(writer, todoService.findAllByUserOrAll(user));
     }
   }
 

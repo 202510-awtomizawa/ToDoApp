@@ -26,6 +26,9 @@ public class AppUser {
   @Column(nullable = false)
   private boolean enabled = true;
 
+  @Column(length = 20)
+  private String role = "USER";
+
   public Integer getId() {
     return id;
   }
@@ -64,5 +67,13 @@ public class AppUser {
 
   public void setEnabled(boolean enabled) {
     this.enabled = enabled;
+  }
+
+  public String getRole() {
+    return role;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
   }
 }

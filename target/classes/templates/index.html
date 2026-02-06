@@ -418,6 +418,12 @@
           <span class="sidebar-text">カテゴリ編集</span>
         </a>
       </li>
+      <li class="sidebar-item" sec:authorize="hasRole('ADMIN')">
+        <a class="sidebar-link" th:href="@{/admin/users}" title="ユーザー管理" aria-label="ユーザー管理">
+          <span class="sidebar-icon">🛠</span>
+          <span class="sidebar-text">ユーザー管理</span>
+        </a>
+      </li>
       <li class="sidebar-item">
         <a class="sidebar-link" th:href="@{/todos/export/csv}" title="CSVダウンロード" aria-label="CSVダウンロード">
           <span class="sidebar-icon">⬇</span>
