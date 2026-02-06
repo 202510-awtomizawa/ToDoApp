@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>ToDo登録</title>
+  <title th:text="#{create.title}">ToDo登録</title>
   <style>
     body.todo-create-page {
       font-family: Arial, sans-serif;
@@ -132,42 +132,42 @@
 </head>
 <body class="todo-create-page">
   <div class="form-wrap">
-    <h1>ToDo登録</h1>
+    <h1 th:text="#{create.title}">ToDo登録</h1>
 
     <form method="post" th:action="@{/todos/confirm}" th:object="${todo}">
       <input type="hidden" th:field="*{id}">
 
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label" for="author">作成者 <span class="required">必須</span></label>
-          <input class="form-control" type="text" th:field="*{author}" id="author" placeholder="作成者">
+          <label class="form-label" for="author"><span th:text="#{label.author}">作成者</span> <span class="required" th:text="#{label.required}">必須</span></label>
+          <input class="form-control" type="text" th:field="*{author}" id="author" placeholder="作成者" th:attr="placeholder=#{label.author}">
           <div class="error" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></div>
         </div>
         <div class="form-group">
-          <label class="form-label" for="title">タイトル <span class="required">必須</span></label>
-          <input class="form-control" type="text" th:field="*{title}" id="title" placeholder="タイトル">
+          <label class="form-label" for="title"><span th:text="#{label.title}">タイトル</span> <span class="required" th:text="#{label.required}">必須</span></label>
+          <input class="form-control" type="text" th:field="*{title}" id="title" placeholder="タイトル" th:attr="placeholder=#{label.title}">
           <div class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
         </div>
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="detail">詳細</label>
-        <textarea class="form-control" rows="4" th:field="*{detail}" id="detail" placeholder="詳細"></textarea>
+        <label class="form-label" for="detail" th:text="#{label.detail}">詳細</label>
+        <textarea class="form-control" rows="4" th:field="*{detail}" id="detail" placeholder="詳細" th:attr="placeholder=#{label.detail}"></textarea>
         <div class="error" th:if="${#fields.hasErrors('detail')}" th:errors="*{detail}"></div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">状態</label>
+          <label class="form-label" th:text="#{label.status}">状態</label>
           <div class="radio-group">
             <label class="form-radio">
               <input type="checkbox" th:field="*{completed}">
-              完了
+              <span th:text="#{status.done}">完了</span>
             </label>
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label" for="priority">優先度</label>
+          <label class="form-label" for="priority" th:text="#{label.priority}">優先度</label>
           <select class="form-control" th:field="*{priority}" id="priority">
             <option th:each="p : ${priorities}" th:value="${p}" th:text="${p.displayName}"></option>
           </select>
@@ -176,35 +176,35 @@
 
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label" for="deadline">期限</label>
+          <label class="form-label" for="deadline" th:text="#{label.deadline}">期限</label>
           <div class="input-group">
-            <span class="input-group-text">📅</span>
+            <span class="input-group-text">&#128197;</span>
             <input class="form-control" type="date" th:field="*{deadline}" id="deadline"
                    th:attr="min=${#temporals.format(#temporals.createToday(), 'yyyy-MM-dd')}">
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label" for="category">カテゴリ</label>
+          <label class="form-label" for="category" th:text="#{label.category}">カテゴリ</label>
           <select class="form-control" th:field="*{category.id}" id="category">
-            <option value="">未分類</option>
+            <option value="" th:text="#{category.unclassified}">未分類</option>
             <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
           </select>
           <div class="helper">
-            <a th:href="@{/categories}">カテゴリ編集</a>
+            <a th:href="@{/categories}" th:text="#{menu.category}">カテゴリ編集</a>
           </div>
         </div>
       </div>
 
       <div class="btn-group">
-        <button class="btn btn-primary" type="submit">確認</button>
-        <a class="btn btn-secondary" th:href="@{/todos}">戻る</a>
+        <button class="btn btn-primary" type="submit" th:text="#{button.confirm}">確認</button>
+        <a class="btn btn-secondary" th:href="@{/todos}" th:text="#{button.back}">戻る</a>
       </div>
     </form>
 
-    <form method="post" th:if="${todo.id != null}" th:action="@{/todos/{id}/delete(id=${todo.id})}" onsubmit="return confirm('削除しますか？');">
+    <form method="post" th:if="${todo.id != null}" th:action="@{/todos/{id}/delete(id=${todo.id})}" onsubmit="return confirm('削除しますか？');" th:attr="onsubmit=|return confirm('${#messages.msg(\"confirm.delete\")}')|">
       <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
       <div class="btn-group" style="margin-top: 16px;">
-        <button class="btn btn-secondary" type="submit">削除</button>
+        <button class="btn btn-secondary" type="submit" th:text="#{button.delete}">削除</button>
       </div>
     </form>
   </div>

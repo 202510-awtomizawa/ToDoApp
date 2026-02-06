@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>ログイン</title>
+  <title th:text="#{login.title}">ログイン</title>
   <style>
     body.login-page {
       font-family: Arial, sans-serif;
@@ -68,19 +68,19 @@
 <body class="login-page">
   <div class="login-wrap">
     <div class="login-box">
-      <h1>ログイン</h1>
-      <div class="error" th:if="${param.error}">ユーザー名またはパスワードが違います。</div>
-      <div class="message" th:if="${param.logout}">ログアウトしました。</div>
+      <h1 th:text="#{login.title}">ログイン</h1>
+      <div class="error" th:if="${param.error}" th:text="#{login.error}">ユーザー名またはパスワードが違います。</div>
+      <div class="message" th:if="${param.logout}" th:text="#{login.logout}">ログアウトしました。</div>
       <form th:action="@{/login}" method="post">
         <div class="form-group">
-          <label class="form-label" for="username">ユーザー名</label>
-          <input class="form-control" id="username" name="username" type="text" placeholder="ユーザー名" autofocus>
+          <label class="form-label" for="username" th:text="#{login.username}">ユーザー名</label>
+          <input class="form-control" id="username" name="username" type="text" placeholder="ユーザー名" th:attr="placeholder=#{login.username}" autofocus>
         </div>
         <div class="form-group">
-          <label class="form-label" for="password">パスワード</label>
-          <input class="form-control" id="password" name="password" type="password" placeholder="パスワード">
+          <label class="form-label" for="password" th:text="#{login.password}">パスワード</label>
+          <input class="form-control" id="password" name="password" type="password" placeholder="パスワード" th:attr="placeholder=#{login.password}">
         </div>
-        <button class="btn btn-primary" type="submit">ログイン</button>
+        <button class="btn btn-primary" type="submit" th:text="#{login.submit}">ログイン</button>
       </form>
     </div>
   </div>

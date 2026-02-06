@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>ユーザー編集</title>
+  <title th:text="#{admin.user_edit.title}">ユーザー編集</title>
   <link rel="stylesheet" th:href="@{/style.css}">
   <style>
     body {
@@ -28,16 +28,16 @@
 </head>
 
 <body>
-  <h1>ユーザー編集</h1>
+  <h1 th:text="#{admin.user_edit.title}">ユーザー編集</h1>
 
   <div>
-    <div>ユーザー名: <span th:text="${user.username}">user</span></div>
-    <div>メール: <span th:text="${user.email}">user@example.com</span></div>
+    <div><span th:text="#{admin.user_edit.username}">ユーザー名</span>: <span th:text="${user.username}">user</span></div>
+    <div><span th:text="#{admin.user_edit.email}">メール</span>: <span th:text="${user.email}">user@example.com</span></div>
   </div>
 
   <form method="post" th:action="@{/admin/users/{id}(id=${user.id})}" th:object="${form}">
     <div class="form-row">
-      <label for="role">ロール</label>
+      <label for="role" th:text="#{admin.user_edit.role}">ロール</label>
       <select id="role" th:field="*{role}">
         <option value="USER">USER</option>
         <option value="ADMIN">ADMIN</option>
@@ -48,13 +48,13 @@
     <div class="form-row">
       <label>
         <input type="checkbox" th:field="*{enabled}">
-        アカウント有効
+        <span th:text="#{admin.user_edit.enabled}">アカウント有効</span>
       </label>
     </div>
 
     <div class="form-row">
-      <button type="submit">更新</button>
-      <a th:href="@{/admin/users}">戻る</a>
+      <button type="submit" th:text="#{admin.user_edit.update}">更新</button>
+      <a th:href="@{/admin/users}" th:text="#{admin.user_edit.back}">戻る</a>
     </div>
   </form>
 </body>

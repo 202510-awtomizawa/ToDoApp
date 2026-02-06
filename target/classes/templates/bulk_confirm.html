@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>一括削除確認</title>
+  <title th:text="#{bulk.confirm.title}">一括削除確認</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 24px; background: #fffafa; }
     table { border-collapse: collapse; width: 100%; margin-top: 12px; }
@@ -12,22 +12,22 @@
   </style>
 </head>
 <body>
-  <h1>一括削除確認</h1>
-  <p>以下のToDoを削除します。よろしいですか？</p>
+  <h1 th:text="#{bulk.confirm.title}">一括削除確認</h1>
+  <p th:text="#{bulk.confirm.message}">以下のToDoを削除します。よろしいですか？</p>
 
   <table>
     <thead>
       <tr>
-        <th>タイトル</th>
-        <th>作成者</th>
-        <th>状態</th>
+        <th th:text="#{bulk.confirm.todo_title}">タイトル</th>
+        <th th:text="#{bulk.confirm.author}">作成者</th>
+        <th th:text="#{bulk.confirm.status}">状態</th>
       </tr>
     </thead>
     <tbody>
       <tr th:each="todo : ${todos}">
         <td th:text="${todo.title}">タイトル</td>
         <td th:text="${todo.author}">作成者</td>
-        <td th:text="${todo.completed ? '完了' : '未完了'}">未完了</td>
+        <td th:text="${todo.completed} ? #{status.done} : #{status.todo}">未完了</td>
       </tr>
     </tbody>
   </table>
@@ -36,8 +36,8 @@
     <input type="hidden" th:each="id : ${ids}" name="ids" th:value="${id}">
     <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     <div class="actions">
-      <button type="submit">削除実行</button>
-      <a th:href="@{/todos(bulk=true)}">キャンセル</a>
+      <button type="submit" th:text="#{button.delete}">削除</button>
+      <a th:href="@{/todos(bulk=true)}" th:text="#{button.cancel}">キャンセル</a>
     </div>
   </form>
 </body>

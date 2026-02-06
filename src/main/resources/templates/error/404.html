@@ -1,47 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
   <meta charset="UTF-8">
-  <title>ページが見つかりません</title>
-  <link rel="stylesheet" th:href="@{/style.css}">
+  <title th:text="#{error.404.title}">ページが見つかりません</title>
   <style>
-    .error-wrap {
-      max-width: 720px;
-      margin: 80px auto;
-      padding: 24px;
-      text-align: center;
-    }
-
-    .error-title {
-      font-size: 28px;
-      margin-bottom: 12px;
-    }
-
-    .error-message {
-      color: #555;
-      margin-bottom: 24px;
-    }
-
-    .error-actions a {
-      display: inline-block;
-      padding: 8px 16px;
-      border-radius: 6px;
-      background: #2563eb;
-      color: #fff;
-      text-decoration: none;
-    }
+    body { font-family: Arial, sans-serif; margin: 24px; }
   </style>
 </head>
-
 <body>
-  <div class="error-wrap">
-    <div class="error-title">ページが見つかりません</div>
-    <div class="error-message" th:text="${message} ?: 'お探しのページは見つかりませんでした。'">お探しのページは見つかりませんでした。</div>
-    <div class="error-actions">
-      <a th:href="@{/todos}">ToDo一覧へ戻る</a>
-    </div>
-  </div>
+  <h1 th:text="#{error.404.title}">ページが見つかりません</h1>
+  <p th:text="#{error.404.message}">お探しのページは見つかりませんでした。</p>
+  <a th:href="@{/todos}" th:text="#{error.back}">ToDo一覧へ戻る</a>
 </body>
-
 </html>

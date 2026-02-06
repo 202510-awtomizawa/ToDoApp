@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <title>ToDo一覧</title>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" th:href="@{/style.css}">
   <style>
     body {
@@ -32,12 +31,11 @@
     .actions form {
       display: inline;
     }
+
     td.actions {
       text-align: right;
       white-space: nowrap;
       width: 1%;
-      border-left: none !important;
-      border-right: none !important;
     }
 
     .checkbox-cell {
@@ -403,20 +401,8 @@
     }
 
     .sidebar-icon {
-      width: auto;
-      text-align: left;
-    }
-
-    .sidebar-icon .material-icons {
-      font-size: 16px;
-      vertical-align: middle;
-    }
-
-    .sidebar-icon-label {
-      font-size: 10px;
-      color: #6c757d;
-      vertical-align: middle;
-      display: none;
+      width: 20px;
+      text-align: center;
     }
 
     .has-sidebar .main-content {
@@ -504,43 +490,43 @@
     <ul class="sidebar-menu">
       <li class="sidebar-item">
         <button class="sidebar-link" type="button" id="search-toggle" title="検索" aria-label="検索">
-          <span th:replace="~{icons :: sidebarIcon('search','search')}"></span>
+          <span class="sidebar-icon">🔍</span>
           <span class="sidebar-text">検索</span>
         </button>
       </li>
       <li class="sidebar-item">
         <a class="sidebar-link" th:href="@{/todos(bulk=true)}" title="一括削除モード" aria-label="一括削除モード">
-          <span th:replace="~{icons :: sidebarIcon('delete','delete')}"></span>
+          <span class="sidebar-icon">🗑</span>
           <span class="sidebar-text">一括削除</span>
         </a>
       </li>
       <li class="sidebar-item">
         <a class="sidebar-link" th:href="@{/categories}" title="カテゴリ編集" aria-label="カテゴリ編集">
-          <span th:replace="~{icons :: sidebarIcon('edit','edit')}"></span>
+          <span class="sidebar-icon">🏷</span>
           <span class="sidebar-text">カテゴリ編集</span>
         </a>
       </li>
       <li class="sidebar-item" sec:authorize="hasRole('ADMIN')">
         <a class="sidebar-link" th:href="@{/admin/users}" title="ユーザー管理" aria-label="ユーザー管理">
-          <span th:replace="~{icons :: sidebarIcon('people','people')}"></span>
+          <span class="sidebar-icon">🛠</span>
           <span class="sidebar-text">ユーザー管理</span>
         </a>
       </li>
       <li class="sidebar-item">
         <a class="sidebar-link" th:href="@{/todos/export/csv}" title="CSVダウンロード" aria-label="CSVダウンロード">
-          <span th:replace="~{icons :: sidebarIcon('cloud_download','cloud_download')}"></span>
+          <span class="sidebar-icon">⬇</span>
           <span class="sidebar-text">CSVダウンロード</span>
         </a>
       </li>
       <li class="sidebar-item" sec:authorize="isAuthenticated()">
         <a class="sidebar-link" th:href="@{/logout}" title="ログアウト" aria-label="ログアウト">
-          <span th:replace="~{icons :: sidebarIcon('logout','logout')}"></span>
+          <span class="sidebar-icon">👤</span>
           <span class="sidebar-text">ログアウト</span>
         </a>
       </li>
       <li class="sidebar-item" sec:authorize="isAnonymous()">
         <a class="sidebar-link" th:href="@{/login}" title="ログイン" aria-label="ログイン">
-          <span th:replace="~{icons :: sidebarIcon('login','login')}"></span>
+          <span class="sidebar-icon">👤</span>
           <span class="sidebar-text">ログイン</span>
         </a>
       </li>
@@ -659,7 +645,8 @@
             <td class="col-hidden" th:text="${#temporals.format(todo.updatedAt, 'yyyy-MM-dd HH:mm')}">2025-01-01 00:00
             </td>
             <td class="col-hidden actions">
-              <a class="edit-link" th:href="@{/todos/{id}/edit(id=${todo.id})}"><span class="material-icons">more_vert</span></a>
+              <a class="edit-link" th:href="@{/todos/{id}/edit(id=${todo.id})}"><span
+                  class="material-icons">more_vert</span></a>
             </td>
           </tr>
         </tbody>
@@ -676,8 +663,7 @@
       <a th:classappend="${page.first} ? ' disabled' : ''"
         th:href="@{/todos(page=${page.number - 1}, size=${page.size}, q=${q}, categoryId=${categoryId}, priority=${priority}, sort=${sort}, dir=${dir}, bulk=${bulk})}">前へ</a>
       <a th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
-        th:classappend="${i == page.number} ? ' active' : ''"
-        th:text="${i + 1}"
+        th:classappend="${i == page.number} ? ' active' : ''" th:text="${i + 1}"
         th:href="@{/todos(page=${i}, size=${page.size}, q=${q}, categoryId=${categoryId}, priority=${priority}, sort=${sort}, dir=${dir}, bulk=${bulk})}">1</a>
       <a th:classappend="${page.last} ? ' disabled' : ''"
         th:href="@{/todos(page=${page.number + 1}, size=${page.size}, q=${q}, categoryId=${categoryId}, priority=${priority}, sort=${sort}, dir=${dir}, bulk=${bulk})}">次へ</a>
@@ -770,6 +756,8 @@
     if (searchPanel && searchPanel.classList.contains('open')) {
       openSearchPanel();
     }
+
+
   </script>
 </body>
 

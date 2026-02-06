@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>ToDo確認</title>
+  <title th:text="#{confirm.title}">ToDo確認</title>
   <style>
     body.todo-confirm-page {
       font-family: Arial, sans-serif;
@@ -94,42 +94,42 @@
 </head>
 <body class="todo-confirm-page">
   <div class="confirm-card">
-    <h1>ToDo確認</h1>
-    <p class="lead">上記で登録して良いですか？</p>
+    <h1 th:text="#{confirm.title}">ToDo確認</h1>
+    <p class="lead" th:text="#{confirm.message}">上記で登録して良いですか？</p>
 
     <div class="form-group">
-      <label class="form-label">作成者</label>
+      <label class="form-label" th:text="#{label.author}">作成者</label>
       <div class="form-control readonly" th:text="${todo.author}">作成者</div>
     </div>
 
     <div class="form-group">
-      <label class="form-label">タイトル</label>
+      <label class="form-label" th:text="#{label.title}">タイトル</label>
       <div class="form-control readonly" th:text="${todo.title}">タイトル</div>
     </div>
 
     <div class="form-group">
-      <label class="form-label">詳細</label>
+      <label class="form-label" th:text="#{label.detail}">詳細</label>
       <div class="form-control readonly textarea-like" th:text="${todo.detail}">詳細</div>
     </div>
 
     <div class="form-group">
-      <label class="form-label">状態</label>
-      <div class="form-control readonly" th:text="${todo.completed ? '完了' : '未完了'}">未完了</div>
+      <label class="form-label" th:text="#{label.status}">状態</label>
+      <div class="form-control readonly" th:text="${todo.completed} ? #{status.done} : #{status.todo}">未完了</div>
     </div>
 
     <div class="form-group">
-      <label class="form-label">優先度</label>
+      <label class="form-label" th:text="#{label.priority}">優先度</label>
       <div class="form-control readonly" th:text="${todo.priority.displayName}">中</div>
     </div>
 
     <div class="form-group">
-      <label class="form-label">期限</label>
+      <label class="form-label" th:text="#{label.deadline}">期限</label>
       <div class="form-control readonly" th:text="${todo.deadline != null ? #temporals.format(todo.deadline, 'yyyy/MM/dd') : ''}"></div>
     </div>
 
     <div class="form-group">
-      <label class="form-label">カテゴリ</label>
-      <div class="form-control readonly" th:text="${(todo.category != null && todo.category.id != null) ? todo.category.name : '未分類'}">未分類</div>
+      <label class="form-label" th:text="#{label.category}">カテゴリ</label>
+      <div class="form-control readonly" th:text="${(todo.category != null && todo.category.id != null) ? todo.category.name : #{category.unclassified}}">未分類</div>
     </div>
 
     <div class="btn-group">
@@ -142,7 +142,7 @@
         <input type="hidden" name="priority" th:value="${todo.priority}">
         <input type="hidden" name="deadline" th:value="${todo.deadline}">
         <input type="hidden" name="category.id" th:value="${todo.category != null ? todo.category.id : ''}">
-        <button class="btn btn-primary" type="submit">登録</button>
+        <button class="btn btn-primary" type="submit" th:text="#{button.submit}">登録</button>
       </form>
 
       <form method="post" th:action="@{/todos/new}" style="display:inline;">
@@ -154,7 +154,7 @@
         <input type="hidden" name="priority" th:value="${todo.priority}">
         <input type="hidden" name="deadline" th:value="${todo.deadline}">
         <input type="hidden" name="category.id" th:value="${todo.category != null ? todo.category.id : ''}">
-        <button class="btn btn-secondary" type="submit">修正</button>
+        <button class="btn btn-secondary" type="submit" th:text="#{button.back}">戻る</button>
       </form>
     </div>
   </div>

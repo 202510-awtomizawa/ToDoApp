@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>カテゴリ編集</title>
+  <title th:text="#{category.title}">カテゴリ編集</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 24px; }
     .category-page h1 { text-align: center; }
@@ -16,7 +16,7 @@
   </style>
 </head>
 <body class="category-page">
-  <h1>カテゴリ編集</h1>
+  <h1 th:text="#{category.title}">カテゴリ編集</h1>
 
   <div class="message" th:if="${message}" th:text="${message}"></div>
 
@@ -25,8 +25,8 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>カテゴリ名</th>
-          <th>色</th>
+          <th th:text="#{category.name}">カテゴリ名</th>
+          <th th:text="#{category.color}">色</th>
         </tr>
       </thead>
       <tbody>
@@ -49,8 +49,8 @@
     </table>
 
     <div class="actions">
-      <button type="submit">保存</button>
-      <a class="back" th:href="@{/todos}">ToDo一覧へ</a>
+      <button type="submit" th:text="#{button.save}">保存</button>
+      <a class="back" th:href="@{/todos}" th:text="#{button.to_list}">ToDo一覧へ</a>
     </div>
   </form>
 </body>
