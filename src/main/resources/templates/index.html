@@ -448,6 +448,8 @@
 
     html.sidebar-collapsed .sidebar {
       width: 56px;
+      overflow: hidden;
+      white-space: nowrap;
     }
 
     .sidebar.sidebar-collapsed .sidebar-title {
@@ -462,8 +464,15 @@
       display: none;
     }
 
-    html.sidebar-collapsed .sidebar-text {
-      display: none;
+    html.sidebar-collapsed .sidebar .sidebar-text,
+    html.sidebar-collapsed .sidebar .sidebar-title,
+    html.sidebar-collapsed .sidebar .sidebar-lang {
+      display: none !important;
+    }
+
+    html.sidebar-collapsed .sidebar .sidebar-link {
+      white-space: nowrap;
+      overflow: hidden;
     }
 
     .sidebar.sidebar-collapsed .sidebar-link {
