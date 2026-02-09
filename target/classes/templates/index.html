@@ -4,6 +4,18 @@
 <head>
   <meta charset="UTF-8">
   <title th:text="#{app.todo_list}">ToDo一覧</title>
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('sidebarCollapsed') === '1') {
+          document.documentElement.classList.add('sidebar-collapsed');
+        }
+      } catch (e) {
+        // Ignore storage access errors.
+      }
+      document.documentElement.classList.add('sidebar-ready');
+    })();
+  </script>
   <link rel="stylesheet" th:href="@{/style.css}">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <style>
@@ -376,6 +388,10 @@
       border-right: 1px solid #e5e7eb;
       padding: 24px 12px;
       box-sizing: border-box;
+      transition: none;
+    }
+
+    html.sidebar-animate .sidebar {
       transition: width 0.2s ease;
     }
 
@@ -430,7 +446,15 @@
       width: 56px;
     }
 
+    html.sidebar-collapsed .sidebar {
+      width: 56px;
+    }
+
     .sidebar.sidebar-collapsed .sidebar-title {
+      display: none;
+    }
+
+    html.sidebar-collapsed .sidebar-title {
       display: none;
     }
 
@@ -438,12 +462,24 @@
       display: none;
     }
 
+    html.sidebar-collapsed .sidebar-text {
+      display: none;
+    }
+
     .sidebar.sidebar-collapsed .sidebar-link {
       justify-content: center;
     }
 
+    html.sidebar-collapsed .sidebar-link {
+      justify-content: center;
+    }
+
     .sidebar.sidebar-collapsed~.main-content {
-      margin-left: 56px;
+      margin-left: 200px;
+    }
+
+    html.sidebar-collapsed .sidebar~.main-content {
+      margin-left: 200px;
     }
 
     .sidebar:not(.sidebar-collapsed) .sidebar-toggle {
