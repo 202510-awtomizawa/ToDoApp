@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>ToDo一覧</title>
+  <title th:text="#{app.todo_list}">ToDo一覧</title>
   <link rel="stylesheet" th:href="@{/style.css}">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <style>
@@ -286,6 +286,20 @@
     .main-header-title {
       font-size: 24px;
     }
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: 12px;
+      font-size: 12px;
+    }
+    .lang-switch a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+    .lang-switch a:hover {
+      text-decoration: underline;
+    }
 
     .icon-group {
       display: inline-flex;
@@ -489,49 +503,56 @@
 
 <body th:classappend="${bulk} ? 'bulk-mode' : 'has-sidebar'">
   <aside class="sidebar" th:if="${!bulk}">
-    <button class="sidebar-toggle" type="button" aria-label="サイドバー切替">≡</button>
-    <div class="sidebar-title">メニュー</div>
+    <button class="sidebar-toggle" type="button" th:aria-label="#{sidebar.toggle}">≡</button>
+    <div class="sidebar-title" th:text="#{menu.title}">メニュー</div>
     <ul class="sidebar-menu">
       <li class="sidebar-item">
-        <button class="sidebar-link" type="button" id="search-toggle" title="検索" aria-label="検索">
+        <button class="sidebar-link" type="button" id="search-toggle" th:title="#{menu.search}"
+          th:aria-label="#{menu.search}">
           <span th:replace="~{action_icons :: micon('search')}"></span>
-          <span class="sidebar-text">検索</span>
+          <span class="sidebar-text" th:text="#{menu.search}">検索</span>
         </button>
       </li>
       <li class="sidebar-item">
-        <a class="sidebar-link" th:href="@{/todos(bulk=true)}" title="一括削除モード" aria-label="一括削除モード">
+        <a class="sidebar-link" th:href="@{/todos(bulk=true)}" th:title="#{menu.bulk_delete}"
+          th:aria-label="#{menu.bulk_delete}">
           <span th:replace="~{action_icons :: micon('delete')}"></span>
-          <span class="sidebar-text">一括削除</span>
+          <span class="sidebar-text" th:text="#{menu.bulk_delete}">一括削除</span>
         </a>
       </li>
       <li class="sidebar-item">
-        <a class="sidebar-link" th:href="@{/categories}" title="カテゴリ編集" aria-label="カテゴリ編集">
+        <a class="sidebar-link" th:href="@{/categories}" th:title="#{menu.category}"
+          th:aria-label="#{menu.category}">
           <span th:replace="~{action_icons :: micon('edit')}"></span>
-          <span class="sidebar-text">カテゴリ編集</span>
+          <span class="sidebar-text" th:text="#{menu.category}">カテゴリ編集</span>
         </a>
       </li>
       <li class="sidebar-item" sec:authorize="hasRole('ADMIN')">
-        <a class="sidebar-link" th:href="@{/admin/users}" title="ユーザー管理" aria-label="ユーザー管理">
+        <a class="sidebar-link" th:href="@{/admin/users}" th:title="#{menu.user_admin}"
+          th:aria-label="#{menu.user_admin}">
           <span th:replace="~{action_icons :: micon('people')}"></span>
-          <span class="sidebar-text">ユーザー管理</span>
+          <span class="sidebar-text" th:text="#{menu.user_admin}">ユーザー管理</span>
         </a>
       </li>
       <li class="sidebar-item">
-        <a class="sidebar-link" th:href="@{/todos/export/csv}" title="CSVダウンロード" aria-label="CSVダウンロード">
+        <a class="sidebar-link" th:href="@{/todos/export/csv}" th:title="#{menu.csv}"
+          th:aria-label="#{menu.csv}">
           <span th:replace="~{action_icons :: micon('cloud_download')}"></span>
-          <span class="sidebar-text">CSVダウンロード</span>
+          <span class="sidebar-text" th:text="#{menu.csv}">CSVダウンロード</span>
         </a>
       </li>
       <li class="sidebar-item" sec:authorize="isAuthenticated()">
-        <a class="sidebar-link" th:href="@{/logout}" title="ログアウト" aria-label="ログアウト">
+        <a class="sidebar-link" th:href="@{/logout(lang=${#locale.language})}" th:title="#{menu.logout}"
+          th:aria-label="#{menu.logout}">
           <span th:replace="~{action_icons :: micon('logout')}"></span>
-          <span class="sidebar-text">ログアウト</span>
+          <span class="sidebar-text" th:text="#{menu.logout}">ログアウト</span>
         </a>
       </li>
       <li class="sidebar-item" sec:authorize="isAnonymous()">
-        <a class="sidebar-link" th:href="@{/login}" title="ログイン" aria-label="ログイン">
+        <a class="sidebar-link" th:href="@{/login}" th:title="#{menu.login}"
+          th:aria-label="#{menu.login}">
           <span th:replace="~{action_icons :: micon('login')}"></span>
-          <span class="sidebar-text">ログイン</span>
+          <span class="sidebar-text" th:text="#{menu.login}">ログイン</span>
         </a>
       </li>
     </ul>
@@ -539,71 +560,79 @@
 
   <div class="main-content">
     <div class="main-header-bar">
-      <span class="main-header-title">ToDo</span>
+      <span class="main-header-title" th:text="#{app.todo}">ToDo</span>
       <div class="new-todo-wrap" th:if="${!bulk}">
-        <a class="new-todo-btn" th:href="@{/todos/new}" title="新規登録" aria-label="新規登録">＋</a>
+        <a class="new-todo-btn" th:href="@{/todos/new}" th:title="#{button.new}" th:aria-label="#{button.new}">＋</a>
+        <span class="lang-switch">
+          <a th:href="@{/todos(lang='ja')}" th:text="#{lang.ja}">日本語</a>
+          <span>/</span>
+          <a th:href="@{/todos(lang='en')}" th:text="#{lang.en}">English</a>
+        </span>
       </div>
     </div>
     <div class="page-header todo-header-card">
-      <h1 class="todo-header-title"><span class="todo-header-icon">📋</span>ToDo一覧</h1>
+      <h1 class="todo-header-title">
+        <span class="todo-header-icon">📋</span>
+        <span th:text="#{app.todo_list}">ToDo一覧</span>
+      </h1>
     </div>
 
     <div id="search-panel" th:if="${!bulk}"
       th:classappend="${(q != null && q != '') or categoryId != null or priority != null or sort != 'createdAt' or dir != 'desc'} ? ' open' : ''">
       <form id="search-form" method="get" th:action="@{/todos}">
-        <label>検索:
+        <label><span th:text="#{label.search}">検索</span>:
           <input type="text" name="q" th:value="${q}">
         </label>
-        <label>並び替え:
+        <label><span th:text="#{label.sort}">並び替え</span>:
           <select name="sort" th:value="${sort}">
-            <option value="createdAt" th:selected="${sort == 'createdAt'}">作成日</option>
-            <option value="updatedAt" th:selected="${sort == 'updatedAt'}">更新日</option>
-            <option value="title" th:selected="${sort == 'title'}">タイトル</option>
-            <option value="author" th:selected="${sort == 'author'}">作成者</option>
-            <option value="completed" th:selected="${sort == 'completed'}">状態</option>
-            <option value="priority" th:selected="${sort == 'priority'}">優先度</option>
-            <option value="deadline" th:selected="${sort == 'deadline'}">期限</option>
+            <option value="createdAt" th:selected="${sort == 'createdAt'}" th:text="#{sort.createdAt}">作成日</option>
+            <option value="updatedAt" th:selected="${sort == 'updatedAt'}" th:text="#{sort.updatedAt}">更新日</option>
+            <option value="title" th:selected="${sort == 'title'}" th:text="#{sort.title}">タイトル</option>
+            <option value="author" th:selected="${sort == 'author'}" th:text="#{sort.author}">作成者</option>
+            <option value="completed" th:selected="${sort == 'completed'}" th:text="#{sort.completed}">状態</option>
+            <option value="priority" th:selected="${sort == 'priority'}" th:text="#{sort.priority}">優先度</option>
+            <option value="deadline" th:selected="${sort == 'deadline'}" th:text="#{sort.deadline}">期限</option>
           </select>
         </label>
-        <label>順序:
+        <label><span th:text="#{label.order}">順序</span>:
           <select name="dir" th:value="${dir}">
-            <option value="asc" th:selected="${dir == 'asc'}">昇順</option>
-            <option value="desc" th:selected="${dir == 'desc'}">降順</option>
+            <option value="asc" th:selected="${dir == 'asc'}" th:text="#{order.asc}">昇順</option>
+            <option value="desc" th:selected="${dir == 'desc'}" th:text="#{order.desc}">降順</option>
           </select>
         </label>
-        <label>カテゴリ:
+        <label><span th:text="#{label.category}">カテゴリ</span>:
           <select name="categoryId">
-            <option value="" th:selected="${categoryId == null}">すべて</option>
+            <option value="" th:selected="${categoryId == null}" th:text="#{option.all}">すべて</option>
             <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"
               th:selected="${categoryId != null && categoryId == cat.id}"></option>
           </select>
         </label>
-        <label>優先度:
+        <label><span th:text="#{label.priority}">優先度</span>:
           <select name="priority">
-            <option value="" th:selected="${priority == null}">すべて</option>
+            <option value="" th:selected="${priority == null}" th:text="#{option.all}">すべて</option>
             <option th:each="p : ${priorities}" th:value="${p}" th:text="${p.displayName}"
               th:selected="${priority != null && priority == p}"></option>
           </select>
         </label>
-        <a th:href="@{/todos}">クリア</a>
+        <a th:href="@{/todos}" th:text="#{button.clear}">クリア</a>
       </form>
     </div>
 
     <form id="bulk-form" method="post" th:if="${bulk}" th:action="@{/todos/bulk/confirm}">
       <div class="bulk-header">
-        <span>🗑 一括削除モード</span>
-        <a th:href="@{/todos}">一覧に戻る</a>
-        <span class="bulk-count"><span id="bulk-count">0</span>件選択中</span>
+        <span>🗑 <span th:text="#{bulk.mode}">一括削除モード</span></span>
+        <a th:href="@{/todos}" th:text="#{bulk.back}">一覧に戻る</a>
+        <span class="bulk-count"><span id="bulk-count">0</span><span th:text="#{bulk.count}">件選択中</span></span>
         <div class="bulk-actions">
-          <button type="button" id="bulk-select-all">全選択</button>
-          <button type="button" id="bulk-clear">全解除</button>
-          <button type="submit">削除</button>
+          <button type="button" id="bulk-select-all" th:text="#{button.select_all}">全選択</button>
+          <button type="button" id="bulk-clear" th:text="#{button.clear_all}">全解除</button>
+          <button type="submit" th:text="#{button.delete}">削除</button>
         </div>
       </div>
       <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     </form>
 
-    <div th:if="${#lists.isEmpty(todos)}" class="message no-data">データはありません</div>
+    <div th:if="${#lists.isEmpty(todos)}" class="message no-data" th:text="#{message.no_data}">データはありません</div>
 
     <div class="todo-table-card" th:if="${!#lists.isEmpty(todos)}">
       <table class="todo-table">
@@ -634,7 +663,7 @@
             <td class="col-hidden">
               <span class="category-badge" th:if="${todo.category != null && todo.category.id != null}"
                 th:text="${todo.category.name}" th:style="'background:' + ${todo.category.color} + ';'"></span>
-              <span th:if="${todo.category == null || todo.category.id == null}">未分類</span>
+              <span th:if="${todo.category == null || todo.category.id == null}" th:text="#{category.unclassified}">未分類</span>
             </td>
             <td class="col-hidden">
               <span class="priority-badge" th:text="${todo.priority.displayName}"
@@ -643,7 +672,7 @@
             <td class="col-hidden"
               th:classappend="${((todo.deadline != null && todo.isOverdue()) ? ' deadline-overdue' : '') + ((todo.deadline != null && todo.getDaysUntilDeadline() == 0) ? ' deadline-today' : '') + ((todo.deadline != null && todo.getDaysUntilDeadline() > 0 && todo.getDaysUntilDeadline() <= 3) ? ' deadline-soon' : '')}"
               th:text="${todo.deadline != null ? #temporals.format(todo.deadline, 'yyyy/MM/dd') : ''}"></td>
-            <td class="col-hidden" th:text="${todo.completed ? '完了' : '未完了'}">未完了</td>
+            <td class="col-hidden" th:text="${todo.completed ? #{status.done} : #{status.todo}}">未完了</td>
             <td class="col-hidden" th:text="${#temporals.format(todo.createdAt, 'yyyy-MM-dd HH:mm')}">2025-01-01 00:00
             </td>
             <td class="col-hidden" th:text="${#temporals.format(todo.updatedAt, 'yyyy-MM-dd HH:mm')}">2025-01-01 00:00
@@ -658,18 +687,18 @@
     </div>
 
     <div class="pager-summary" th:if="${page != null}">
-      <span th:text="'全' + ${page.totalElements} + '件中 ' + ${rangeStart} + '-' + ${rangeEnd} + '件を表示'">
+      <span th:text="#{pager.summary(${page.totalElements}, ${rangeStart}, ${rangeEnd})}">
         全0件中 0-0件を表示
       </span>
     </div>
 
     <div class="pager" th:if="${page != null && page.totalPages > 1}">
-      <a th:classappend="${page.first} ? ' disabled' : ''"
+      <a th:classappend="${page.first} ? ' disabled' : ''" th:text="#{pager.prev}"
         th:href="@{/todos(page=${page.number - 1}, size=${page.size}, q=${q}, categoryId=${categoryId}, priority=${priority}, sort=${sort}, dir=${dir}, bulk=${bulk})}">前へ</a>
       <a th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
         th:classappend="${i == page.number} ? ' active' : ''" th:text="${i + 1}"
         th:href="@{/todos(page=${i}, size=${page.size}, q=${q}, categoryId=${categoryId}, priority=${priority}, sort=${sort}, dir=${dir}, bulk=${bulk})}">1</a>
-      <a th:classappend="${page.last} ? ' disabled' : ''"
+      <a th:classappend="${page.last} ? ' disabled' : ''" th:text="#{pager.next}"
         th:href="@{/todos(page=${page.number + 1}, size=${page.size}, q=${q}, categoryId=${categoryId}, priority=${priority}, sort=${sort}, dir=${dir}, bulk=${bulk})}">次へ</a>
     </div>
 

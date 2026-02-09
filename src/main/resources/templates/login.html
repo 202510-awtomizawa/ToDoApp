@@ -63,6 +63,18 @@
     .login-page .btn-primary:hover { filter: brightness(0.95); }
     .login-page .error { color: #c00; margin-bottom: 8px; }
     .login-page .message { color: #4b5563; margin-bottom: 8px; }
+    .login-page .lang-switch {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 12px;
+    }
+    .login-page .lang-switch a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+    .login-page .lang-switch a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body class="login-page">
@@ -74,14 +86,21 @@
       <form th:action="@{/login}" method="post">
         <div class="form-group">
           <label class="form-label" for="username" th:text="#{login.username}">ユーザー名</label>
-          <input class="form-control" id="username" name="username" type="text" placeholder="ユーザー名" th:attr="placeholder=#{login.username}" autofocus>
+          <input class="form-control" id="username" name="username" type="text"
+                 th:placeholder="#{login.username}" autofocus>
         </div>
         <div class="form-group">
           <label class="form-label" for="password" th:text="#{login.password}">パスワード</label>
-          <input class="form-control" id="password" name="password" type="password" placeholder="パスワード" th:attr="placeholder=#{login.password}">
+          <input class="form-control" id="password" name="password" type="password"
+                 th:placeholder="#{login.password}">
         </div>
         <button class="btn btn-primary" type="submit" th:text="#{login.submit}">ログイン</button>
       </form>
+      <div class="lang-switch">
+        <a th:href="@{/login(lang='ja')}" th:text="#{lang.ja}">日本語</a>
+        <span>/</span>
+        <a th:href="@{/login(lang='en')}" th:text="#{lang.en}">English</a>
+      </div>
     </div>
   </div>
 </body>
