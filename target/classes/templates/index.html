@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>ToDo一覧</title>
   <link rel="stylesheet" th:href="@{/style.css}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -282,6 +283,9 @@
       z-index: 1000;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     }
+    .main-header-title {
+      font-size: 24px;
+    }
 
     .icon-group {
       display: inline-flex;
@@ -490,43 +494,43 @@
     <ul class="sidebar-menu">
       <li class="sidebar-item">
         <button class="sidebar-link" type="button" id="search-toggle" title="検索" aria-label="検索">
-          <span th:replace="~{icons :: micon('search')}"></span>
+          <span th:replace="~{action_icons :: micon('search')}"></span>
           <span class="sidebar-text">検索</span>
         </button>
       </li>
       <li class="sidebar-item">
         <a class="sidebar-link" th:href="@{/todos(bulk=true)}" title="一括削除モード" aria-label="一括削除モード">
-          <span th:replace="~{icons :: micon('delete')}"></span>
+          <span th:replace="~{action_icons :: micon('delete')}"></span>
           <span class="sidebar-text">一括削除</span>
         </a>
       </li>
       <li class="sidebar-item">
         <a class="sidebar-link" th:href="@{/categories}" title="カテゴリ編集" aria-label="カテゴリ編集">
-          <span th:replace="~{icons :: micon('edit')}"></span>
+          <span th:replace="~{action_icons :: micon('edit')}"></span>
           <span class="sidebar-text">カテゴリ編集</span>
         </a>
       </li>
       <li class="sidebar-item" sec:authorize="hasRole('ADMIN')">
         <a class="sidebar-link" th:href="@{/admin/users}" title="ユーザー管理" aria-label="ユーザー管理">
-          <span th:replace="~{icons :: micon('people')}"></span>
+          <span th:replace="~{action_icons :: micon('people')}"></span>
           <span class="sidebar-text">ユーザー管理</span>
         </a>
       </li>
       <li class="sidebar-item">
         <a class="sidebar-link" th:href="@{/todos/export/csv}" title="CSVダウンロード" aria-label="CSVダウンロード">
-          <span th:replace="~{icons :: micon('cloud_download')}"></span>
+          <span th:replace="~{action_icons :: micon('cloud_download')}"></span>
           <span class="sidebar-text">CSVダウンロード</span>
         </a>
       </li>
       <li class="sidebar-item" sec:authorize="isAuthenticated()">
         <a class="sidebar-link" th:href="@{/logout}" title="ログアウト" aria-label="ログアウト">
-          <span th:replace="~{icons :: micon('logout')}"></span>
+          <span th:replace="~{action_icons :: micon('logout')}"></span>
           <span class="sidebar-text">ログアウト</span>
         </a>
       </li>
       <li class="sidebar-item" sec:authorize="isAnonymous()">
         <a class="sidebar-link" th:href="@{/login}" title="ログイン" aria-label="ログイン">
-          <span th:replace="~{icons :: micon('login')}"></span>
+          <span th:replace="~{action_icons :: micon('login')}"></span>
           <span class="sidebar-text">ログイン</span>
         </a>
       </li>
@@ -535,7 +539,7 @@
 
   <div class="main-content">
     <div class="main-header-bar">
-      <span>ToDoリスト</span>
+      <span class="main-header-title">ToDo</span>
       <div class="new-todo-wrap" th:if="${!bulk}">
         <a class="new-todo-btn" th:href="@{/todos/new}" title="新規登録" aria-label="新規登録">＋</a>
       </div>
