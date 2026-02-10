@@ -440,6 +440,8 @@
 
     .has-sidebar .main-content {
       margin-left: 200px;
+      width: calc(100% - 200px);
+      box-sizing: border-box;
     }
 
     .sidebar.sidebar-collapsed {
@@ -485,10 +487,14 @@
 
     .sidebar.sidebar-collapsed~.main-content {
       margin-left: 200px;
+      width: calc(100% - 200px);
+      box-sizing: border-box;
     }
 
     html.sidebar-collapsed .sidebar~.main-content {
       margin-left: 200px;
+      width: calc(100% - 200px);
+      box-sizing: border-box;
     }
 
     .sidebar:not(.sidebar-collapsed) .sidebar-toggle {

@@ -113,7 +113,12 @@
   background: #f3f4f6;
 }
 
-.sidebar-collapsed {
+html,
+body {
+  width: 100%;
+}
+
+.sidebar.sidebar-collapsed {
   width: 56px;
 }
 
