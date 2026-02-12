@@ -81,15 +81,6 @@ public class TodoController {
       Model model) {
     AppUser user = getCurrentUser(userDetails);
     List<Category> categories = categoryService.findAllOrderById();
-    if (categoryId != null) {
-      for (int i = 0; i < categories.size(); i++) {
-        if (categoryId.equals(categories.get(i).getId())) {
-          Category selected = categories.remove(i);
-          categories.add(0, selected);
-          break;
-        }
-      }
-    }
     Sort sort = Sort.by("completed").ascending()
         .and(Sort.by(Sort.Direction.fromString(direction), sortField));
     Pageable effectivePageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);

@@ -548,6 +548,15 @@
       margin: 8px 0 16px;
       font-size: 14px;
     }
+
+    .category-tabs .category-tab {
+      opacity: 0.65;
+    }
+
+    .category-tabs .category-tab.is-selected {
+      opacity: 1;
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -675,14 +684,14 @@
 
     <div class="category-tabs">
       <a class="category-tab"
-         th:classappend="${categoryId == null} ? ' active' : ''"
+         th:classappend="${categoryId == null} ? ' active is-selected' : ''"
          th:href="@{/todos(q=${q}, priority=${priority}, sort=${sort}, dir=${dir}, bulk=${bulk}, lang=${#locale.language})}">
         <span class="tab-icon" th:replace="~{action_icons :: micon('label')}"></span>
         <span class="label" th:text="#{category.all}">全て</span>
       </a>
       <a class="category-tab"
          th:each="c : ${categoriesForTabs}"
-         th:classappend="${categoryId != null and categoryId == c.id} ? ' active' : ''"
+         th:classappend="${categoryId != null and categoryId == c.id} ? ' active is-selected' : ''"
          th:style="'background:' + ${c.color} + ';'"
          th:href="@{/todos(categoryId=${c.id}, q=${q}, priority=${priority}, sort=${sort}, dir=${dir}, bulk=${bulk}, lang=${#locale.language})}">
         <span class="tab-icon" th:replace="~{action_icons :: micon('label')}"></span>
