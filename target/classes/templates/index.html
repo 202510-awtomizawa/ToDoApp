@@ -557,6 +557,20 @@
       opacity: 1;
       font-weight: bold;
     }
+
+    .todo-deadline {
+      font-size: 0.85em;
+      font-weight: 300;
+      margin-top: 2px;
+    }
+
+    .todo-deadline.is-red {
+      color: #dc2626;
+    }
+
+    .todo-deadline.is-blue {
+      color: #2563eb;
+    }
   </style>
 </head>
 
@@ -737,6 +751,9 @@
                   </form>
                 </span>
                 <span th:text="${todo.title}">タイトル</span>
+                <span class="todo-deadline" th:if="${todo.deadline != null}"
+                  th:classappend="${todo.deadlineStatus == 'OVERDUE_OR_TODAY'} ? ' is-red' : (${todo.deadlineStatus == 'DUE_THIS_WEEK'} ? ' is-blue' : '')"
+                  th:text="${#temporals.format(todo.deadline, 'MM/dd')}"></span>
               </div>
             </td>
             <td class="col-hidden" th:text="${stat.count}">1</td>

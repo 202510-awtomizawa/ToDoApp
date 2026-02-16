@@ -3,6 +3,8 @@ package com.example.todo.entity;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.time.DayOfWeek;
+import java.time.temporal.TemporalAdjusters;
 
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Column;
@@ -162,6 +164,21 @@ public class Todo {
       return null;
     }
     return Math.toIntExact(ChronoUnit.DAYS.between(LocalDate.now(), deadline));
+  }
+
+  public String getDeadlineStatus() {
+    if (deadline == null) {
+      return null;
+    }
+    LocalDate today = LocalDate.now();
+    if (!deadline.isAfter(today)) {
+      return "OVERDUE_OR_TODAY";
+    }
+    LocalDate endOfWeek = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+    if (!deadline.isAfter(endOfWeek)) {
+      return "DUE_THIS_WEEK";
+    }
+    return "DUE_LATER";
   }
 
   public Category getCategory() {
