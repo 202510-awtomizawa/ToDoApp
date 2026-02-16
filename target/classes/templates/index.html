@@ -585,6 +585,24 @@
       line-height: 1;
       vertical-align: middle;
     }
+
+    .user-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #f2f2f2;
+      color: #333;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1;
+      margin: 0 6px;
+      flex-shrink: 0;
+      position: relative;
+      left: -7px;
+    }
   </style>
 </head>
 
@@ -764,6 +782,9 @@
                       th:value="${_csrf.token}">
                   </form>
                 </span>
+                <span class="user-badge"
+                  th:if="${todo.author != null and !#strings.isEmpty(todo.author)}"
+                  th:text="${#strings.substring(todo.author, 0, 1)}"></span>
                 <div style="display:flex; flex-direction:column;">
                   <span th:text="${todo.title}">タイトル</span>
                   <span class="todo-deadline" th:if="${todo.deadline != null}"
