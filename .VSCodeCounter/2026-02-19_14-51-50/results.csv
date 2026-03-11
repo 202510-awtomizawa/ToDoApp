@@ -1,0 +1,58 @@
+"filename", "language", "HTML", "JavaScript", "PostCSS", "Java Properties", "MS SQL", "XML", "Java", "comment", "blank", "total"
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\TodoApplication.java", "Java", 0, 0, 0, 0, 0, 0, 9, 0, 4, 13
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\aop\LoggingAspect.java", "Java", 0, 0, 0, 0, 0, 0, 36, 1, 9, 46
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\aop\PerformanceAspect.java", "Java", 0, 0, 0, 0, 0, 0, 28, 1, 6, 35
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\api\ApiResponse.java", "Java", 0, 0, 0, 0, 0, 0, 37, 0, 12, 49
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\api\TodoApiController.java", "Java", 0, 0, 0, 0, 0, 0, 138, 0, 15, 153
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\api\TodoRequest.java", "Java", 0, 0, 0, 0, 0, 0, 61, 0, 25, 86
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\api\TodoResponse.java", "Java", 0, 0, 0, 0, 0, 0, 103, 0, 27, 130
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\config\CategoryInitializer.java", "Java", 0, 0, 0, 0, 0, 0, 16, 0, 6, 22
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\config\SecurityConfig.java", "Java", 0, 0, 0, 0, 0, 0, 58, 0, 7, 65
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\config\UserDataInitializer.java", "Java", 0, 0, 0, 0, 0, 0, 47, 0, 11, 58
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\config\WebConfig.java", "Java", 0, 0, 0, 0, 0, 0, 37, 0, 8, 45
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\controller\AdminUserController.java", "Java", 0, 0, 0, 0, 0, 0, 83, 0, 11, 94
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\controller\CategoryController.java", "Java", 0, 0, 0, 0, 0, 0, 65, 0, 10, 75
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\controller\HomeController.java", "Java", 0, 0, 0, 0, 0, 0, 10, 0, 3, 13
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\controller\LoginController.java", "Java", 0, 0, 0, 0, 0, 0, 10, 0, 3, 13
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\controller\TodoController.java", "Java", 0, 0, 0, 0, 0, 0, 234, 0, 27, 261
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\entity\AppUser.java", "Java", 0, 0, 0, 0, 0, 0, 60, 0, 20, 80
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\entity\Category.java", "Java", 0, 0, 0, 0, 0, 0, 42, 0, 11, 53
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\entity\Priority.java", "Java", 0, 0, 0, 0, 0, 0, 22, 0, 7, 29
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\entity\Todo.java", "Java", 0, 0, 0, 0, 0, 0, 174, 0, 43, 217
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\exception\ApiExceptionHandler.java", "Java", 0, 0, 0, 0, 0, 0, 30, 0, 7, 37
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\exception\BusinessException.java", "Java", 0, 0, 0, 0, 0, 0, 9, 0, 3, 12
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\exception\GlobalExceptionHandler.java", "Java", 0, 0, 0, 0, 0, 0, 33, 0, 6, 39
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\exception\TodoNotFoundException.java", "Java", 0, 0, 0, 0, 0, 0, 9, 0, 3, 12
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\form\AdminUserEditForm.java", "Java", 0, 0, 0, 0, 0, 0, 19, 0, 8, 27
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\form\CategoryEditForm.java", "Java", 0, 0, 0, 0, 0, 0, 15, 0, 7, 22
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\mapper\CategoryMapper.java", "Java", 0, 0, 0, 0, 0, 0, 13, 0, 9, 22
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\repository\TodoRepository.java", "Java", 0, 0, 0, 0, 0, 0, 77, 0, 16, 93
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\repository\UserRepository.java", "Java", 0, 0, 0, 0, 0, 0, 7, 0, 5, 12
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\service\CategoryService.java", "Java", 0, 0, 0, 0, 0, 0, 57, 0, 12, 69
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\service\CsvExportService.java", "Java", 0, 0, 0, 0, 0, 0, 65, 0, 12, 77
+"c:\academia\src\spring_tr4\src\main\java\com\example\todo\service\TodoService.java", "Java", 0, 0, 0, 0, 0, 0, 115, 0, 21, 136
+"c:\academia\src\spring_tr4\src\main\resources\application.properties", "Java Properties", 0, 0, 0, 13, 0, 0, 0, 0, 1, 14
+"c:\academia\src\spring_tr4\src\main\resources\mappers\CategoryMapper.xml", "XML", 0, 0, 0, 0, 0, 36, 0, 0, 6, 42
+"c:\academia\src\spring_tr4\src\main\resources\messages_en.properties", "Java Properties", 0, 0, 0, 102, 0, 0, 0, 0, 16, 118
+"c:\academia\src\spring_tr4\src\main\resources\messages_ja.properties", "Java Properties", 0, 0, 0, 102, 0, 0, 0, 0, 16, 118
+"c:\academia\src\spring_tr4\src\main\resources\messages_ja_JP.properties", "Java Properties", 0, 0, 0, 99, 0, 0, 0, 0, 16, 115
+"c:\academia\src\spring_tr4\src\main\resources\schema.sql", "MS SQL", 0, 0, 0, 0, 10, 0, 0, 0, 2, 12
+"c:\academia\src\spring_tr4\src\main\resources\static\sidebar.js", "JavaScript", 0, 26, 0, 0, 0, 0, 0, 0, 5, 31
+"c:\academia\src\spring_tr4\src\main\resources\static\style.css", "PostCSS", 0, 0, 200, 0, 0, 0, 0, 0, 36, 236
+"c:\academia\src\spring_tr4\src\main\resources\templates\action_icons.html", "HTML", 77, 0, 0, 0, 0, 0, 0, 0, 1, 78
+"c:\academia\src\spring_tr4\src\main\resources\templates\admin\user_edit.html", "HTML", 52, 0, 0, 0, 0, 0, 0, 0, 11, 63
+"c:\academia\src\spring_tr4\src\main\resources\templates\admin\users.html", "HTML", 103, 0, 0, 0, 0, 0, 0, 0, 17, 120
+"c:\academia\src\spring_tr4\src\main\resources\templates\bulk_confirm.html", "HTML", 42, 0, 0, 0, 0, 0, 0, 0, 3, 45
+"c:\academia\src\spring_tr4\src\main\resources\templates\categories.html", "HTML", 92, 0, 0, 0, 0, 0, 0, 0, 6, 98
+"c:\academia\src\spring_tr4\src\main\resources\templates\communication_icons.html", "HTML", 74, 0, 0, 0, 0, 0, 0, 0, 5, 79
+"c:\academia\src\spring_tr4\src\main\resources\templates\complete.html", "HTML", 106, 0, 0, 0, 0, 0, 0, 0, 13, 119
+"c:\academia\src\spring_tr4\src\main\resources\templates\confirm.html", "HTML", 131, 0, 0, 0, 0, 0, 0, 0, 22, 153
+"c:\academia\src\spring_tr4\src\main\resources\templates\content_icons.html", "HTML", 74, 0, 0, 0, 0, 0, 0, 0, 5, 79
+"c:\academia\src\spring_tr4\src\main\resources\templates\create.html", "HTML", 188, 0, 0, 0, 0, 0, 0, 0, 27, 215
+"c:\academia\src\spring_tr4\src\main\resources\templates\error\404.html", "HTML", 15, 0, 0, 0, 0, 0, 0, 0, 1, 16
+"c:\academia\src\spring_tr4\src\main\resources\templates\error\500.html", "HTML", 15, 0, 0, 0, 0, 0, 0, 0, 1, 16
+"c:\academia\src\spring_tr4\src\main\resources\templates\icon_size_variations.html", "HTML", 51, 0, 0, 0, 0, 0, 0, 0, 3, 54
+"c:\academia\src\spring_tr4\src\main\resources\templates\index.html", "HTML", 828, 0, 0, 0, 0, 0, 0, 0, 119, 947
+"c:\academia\src\spring_tr4\src\main\resources\templates\login.html", "HTML", 107, 0, 0, 0, 0, 0, 0, 0, 1, 108
+"c:\academia\src\spring_tr4\src\main\resources\templates\social_icons.html", "HTML", 74, 0, 0, 0, 0, 0, 0, 0, 5, 79
+"Total", "-", 2029, 26, 200, 316, 10, 36, 1719, 2, 712, 5050

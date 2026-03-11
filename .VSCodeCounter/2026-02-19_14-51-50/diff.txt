@@ -1,0 +1,114 @@
+Date : 2026-02-19 14:51:50
+Directory : c:\academia\src\spring_tr4\src
+Total : 57 files,  4334 codes, 2 comments, 711 blanks, all 5047 lines
+
+Languages
++-----------------+------------+------------+------------+------------+------------+
+| language        | files      | code       | comment    | blank      | total      |
++-----------------+------------+------------+------------+------------+------------+
+| HTML            |         16 |      2,029 |          0 |        240 |      2,269 |
+| Java            |         32 |      1,719 |          2 |        374 |      2,095 |
+| Java Properties |          5 |        314 |          0 |         48 |        362 |
+| PostCSS         |          1 |        200 |          0 |         36 |        236 |
+| XML             |          1 |         36 |          0 |          6 |         42 |
+| JavaScript      |          1 |         26 |          0 |          5 |         31 |
+| MS SQL          |          1 |         10 |          0 |          2 |         12 |
++-----------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                            | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                               |         57 |      4,334 |          2 |        711 |      5,047 |
+| ..                                                                                              |          1 |         -2 |          0 |         -1 |         -3 |
+| ..\.mvn                                                                                         |          1 |         -2 |          0 |         -1 |         -3 |
+| ..\.mvn\wrapper                                                                                 |          1 |         -2 |          0 |         -1 |         -3 |
+| main                                                                                            |         56 |      4,336 |          2 |        712 |      5,050 |
+| main\java                                                                                       |         32 |      1,719 |          2 |        374 |      2,095 |
+| main\java\com                                                                                   |         32 |      1,719 |          2 |        374 |      2,095 |
+| main\java\com\example                                                                           |         32 |      1,719 |          2 |        374 |      2,095 |
+| main\java\com\example\todo                                                                      |         32 |      1,719 |          2 |        374 |      2,095 |
+| main\java\com\example\todo (Files)                                                              |          1 |          9 |          0 |          4 |         13 |
+| main\java\com\example\todo\aop                                                                  |          2 |         64 |          2 |         15 |         81 |
+| main\java\com\example\todo\api                                                                  |          4 |        339 |          0 |         79 |        418 |
+| main\java\com\example\todo\config                                                               |          4 |        158 |          0 |         32 |        190 |
+| main\java\com\example\todo\controller                                                           |          5 |        402 |          0 |         54 |        456 |
+| main\java\com\example\todo\entity                                                               |          4 |        298 |          0 |         81 |        379 |
+| main\java\com\example\todo\exception                                                            |          4 |         81 |          0 |         19 |        100 |
+| main\java\com\example\todo\form                                                                 |          2 |         34 |          0 |         15 |         49 |
+| main\java\com\example\todo\mapper                                                               |          1 |         13 |          0 |          9 |         22 |
+| main\java\com\example\todo\repository                                                           |          2 |         84 |          0 |         21 |        105 |
+| main\java\com\example\todo\service                                                              |          3 |        237 |          0 |         45 |        282 |
+| main\resources                                                                                  |         24 |      2,617 |          0 |        338 |      2,955 |
+| main\resources (Files)                                                                          |          5 |        326 |          0 |         51 |        377 |
+| main\resources\mappers                                                                          |          1 |         36 |          0 |          6 |         42 |
+| main\resources\static                                                                           |          2 |        226 |          0 |         41 |        267 |
+| main\resources\templates                                                                        |         16 |      2,029 |          0 |        240 |      2,269 |
+| main\resources\templates (Files)                                                                |         12 |      1,844 |          0 |        210 |      2,054 |
+| main\resources\templates\admin                                                                  |          2 |        155 |          0 |         28 |        183 |
+| main\resources\templates\error                                                                  |          2 |         30 |          0 |          2 |         32 |
++-------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
+| filename                                                                                        | language        | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
+| c:\academia\src\spring_tr4\.mvn\wrapper\maven-wrapper.properties                                | Java Properties |         -2 |          0 |         -1 |         -3 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\TodoApplication.java                  | Java            |          9 |          0 |          4 |         13 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\aop\LoggingAspect.java                | Java            |         36 |          1 |          9 |         46 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\aop\PerformanceAspect.java            | Java            |         28 |          1 |          6 |         35 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\api\ApiResponse.java                  | Java            |         37 |          0 |         12 |         49 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\api\TodoApiController.java            | Java            |        138 |          0 |         15 |        153 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\api\TodoRequest.java                  | Java            |         61 |          0 |         25 |         86 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\api\TodoResponse.java                 | Java            |        103 |          0 |         27 |        130 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\config\CategoryInitializer.java       | Java            |         16 |          0 |          6 |         22 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\config\SecurityConfig.java            | Java            |         58 |          0 |          7 |         65 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\config\UserDataInitializer.java       | Java            |         47 |          0 |         11 |         58 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\config\WebConfig.java                 | Java            |         37 |          0 |          8 |         45 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\controller\AdminUserController.java   | Java            |         83 |          0 |         11 |         94 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\controller\CategoryController.java    | Java            |         65 |          0 |         10 |         75 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\controller\HomeController.java        | Java            |         10 |          0 |          3 |         13 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\controller\LoginController.java       | Java            |         10 |          0 |          3 |         13 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\controller\TodoController.java        | Java            |        234 |          0 |         27 |        261 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\entity\AppUser.java                   | Java            |         60 |          0 |         20 |         80 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\entity\Category.java                  | Java            |         42 |          0 |         11 |         53 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\entity\Priority.java                  | Java            |         22 |          0 |          7 |         29 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\entity\Todo.java                      | Java            |        174 |          0 |         43 |        217 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\exception\ApiExceptionHandler.java    | Java            |         30 |          0 |          7 |         37 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\exception\BusinessException.java      | Java            |          9 |          0 |          3 |         12 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\exception\GlobalExceptionHandler.java | Java            |         33 |          0 |          6 |         39 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\exception\TodoNotFoundException.java  | Java            |          9 |          0 |          3 |         12 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\form\AdminUserEditForm.java           | Java            |         19 |          0 |          8 |         27 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\form\CategoryEditForm.java            | Java            |         15 |          0 |          7 |         22 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\mapper\CategoryMapper.java            | Java            |         13 |          0 |          9 |         22 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\repository\TodoRepository.java        | Java            |         77 |          0 |         16 |         93 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\repository\UserRepository.java        | Java            |          7 |          0 |          5 |         12 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\service\CategoryService.java          | Java            |         57 |          0 |         12 |         69 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\service\CsvExportService.java         | Java            |         65 |          0 |         12 |         77 |
+| c:\academia\src\spring_tr4\src\main\java\com\example\todo\service\TodoService.java              | Java            |        115 |          0 |         21 |        136 |
+| c:\academia\src\spring_tr4\src\main\resources\application.properties                            | Java Properties |         13 |          0 |          1 |         14 |
+| c:\academia\src\spring_tr4\src\main\resources\mappers\CategoryMapper.xml                        | XML             |         36 |          0 |          6 |         42 |
+| c:\academia\src\spring_tr4\src\main\resources\messages_en.properties                            | Java Properties |        102 |          0 |         16 |        118 |
+| c:\academia\src\spring_tr4\src\main\resources\messages_ja.properties                            | Java Properties |        102 |          0 |         16 |        118 |
+| c:\academia\src\spring_tr4\src\main\resources\messages_ja_JP.properties                         | Java Properties |         99 |          0 |         16 |        115 |
+| c:\academia\src\spring_tr4\src\main\resources\schema.sql                                        | MS SQL          |         10 |          0 |          2 |         12 |
+| c:\academia\src\spring_tr4\src\main\resources\static\sidebar.js                                 | JavaScript      |         26 |          0 |          5 |         31 |
+| c:\academia\src\spring_tr4\src\main\resources\static\style.css                                  | PostCSS         |        200 |          0 |         36 |        236 |
+| c:\academia\src\spring_tr4\src\main\resources\templates\action_icons.html                       | HTML            |         77 |          0 |          1 |         78 |
+| c:\academia\src\spring_tr4\src\main\resources\templates\admin\user_edit.html                    | HTML            |         52 |          0 |         11 |         63 |
+| c:\academia\src\spring_tr4\src\main\resources\templates\admin\users.html                        | HTML            |        103 |          0 |         17 |        120 |
+| c:\academia\src\spring_tr4\src\main\resources\templates\bulk_confirm.html                       | HTML            |         42 |          0 |          3 |         45 |
+| c:\academia\src\spring_tr4\src\main\resources\templates\categories.html                         | HTML            |         92 |          0 |          6 |         98 |
+| c:\academia\src\spring_tr4\src\main\resources\templates\communication_icons.html                | HTML            |         74 |          0 |          5 |         79 |
+| c:\academia\src\spring_tr4\src\main\resources\templates\complete.html                           | HTML            |        106 |          0 |         13 |        119 |
+| c:\academia\src\spring_tr4\src\main\resources\templates\confirm.html                            | HTML            |        131 |          0 |         22 |        153 |
+| c:\academia\src\spring_tr4\src\main\resources\templates\content_icons.html                      | HTML            |         74 |          0 |          5 |         79 |
+| c:\academia\src\spring_tr4\src\main\resources\templates\create.html                             | HTML            |        188 |          0 |         27 |        215 |
+| c:\academia\src\spring_tr4\src\main\resources\templates\error\404.html                          | HTML            |         15 |          0 |          1 |         16 |
+| c:\academia\src\spring_tr4\src\main\resources\templates\error\500.html                          | HTML            |         15 |          0 |          1 |         16 |
+| c:\academia\src\spring_tr4\src\main\resources\templates\icon_size_variations.html               | HTML            |         51 |          0 |          3 |         54 |
+| c:\academia\src\spring_tr4\src\main\resources\templates\index.html                              | HTML            |        828 |          0 |        119 |        947 |
+| c:\academia\src\spring_tr4\src\main\resources\templates\login.html                              | HTML            |        107 |          0 |          1 |        108 |
+| c:\academia\src\spring_tr4\src\main\resources\templates\social_icons.html                       | HTML            |         74 |          0 |          5 |         79 |
+| Total                                                                                           |                 |      4,334 |          2 |        711 |      5,047 |
++-------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
